@@ -1,16 +1,28 @@
 import { randomUUID } from "crypto"
-import { PackageStatusEnum } from "../value-objects/package-stauts-enum"
+import { PackageStatusEnum } from "../value-objects/package-status-enum"
+
+interface PackageProps {
+  title: string
+  content: string
+  recipientId: string
+  deliveryDriverId: string
+  status: PackageStatusEnum
+}
 
 export class Package {
   public id: string
   public title: string
   public content: string
+  public recipientId: string
+  public deliveryDriverId: string
   public status: PackageStatusEnum
 
-  constructor(title: string, content: string, status: PackageStatusEnum, id?: string) {
+  constructor(props: PackageProps, id?: string) {
     this.id = id ?? randomUUID()
-    this.title = title
-    this.content = content
-    this.status = status
+    this.title = props.title
+    this.content = props.content
+    this.status = props.status
+    this.recipientId = props.recipientId
+    this.deliveryDriverId = props.deliveryDriverId
   }
 }
