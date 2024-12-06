@@ -1,5 +1,6 @@
 import { Package } from "../entities/package"
-import { PackageStatusEnum } from "../value-objects/package-status-enum"
+import { PackageRepository } from "../repositories/package-repository"
+import { PackageStatusEnum } from "../enums/package-status-enum"
 
 interface PackageUseCaseRequest {
   deliveryDriverId: string
@@ -10,8 +11,11 @@ interface PackageUseCaseRequest {
 }
 
 export class PackageUseCase {
-  execute({ deliveryDriverId, recipientId, content, title, status }: PackageUseCaseRequest) {
+  constructor(
+    private packageRepository: PackageRepository
+  ) { }
 
+  async execute({ deliveryDriverId, recipientId, content, title, status }: PackageUseCaseRequest) {
     const packageContent = new Package({
       title,
       content,
@@ -19,6 +23,8 @@ export class PackageUseCase {
       deliveryDriverId,
       recipientId
     })
+
+    await this.packageRepository.create(packageContent)
 
     return packageContent
   }

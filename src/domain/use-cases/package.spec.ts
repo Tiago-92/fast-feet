@@ -1,11 +1,19 @@
 import { test, expect } from 'vitest'
 import { PackageUseCase } from './package'
-import { PackageStatusEnum } from '../value-objects/package-status-enum'
+import { PackageStatusEnum } from '../enums/package-status-enum'
+import { PackageRepository } from '../repositories/package-repository'
+import { Package } from '../entities/package'
 
-test('create an package', () => {
-  const packageUseCase = new PackageUseCase()
+const fakePackageRepository: PackageRepository = {
+  create: async (packageContent: Package) => {
+    return;
+  }
+}
 
-  const newPackage = packageUseCase.execute({
+test('create an package', async () => {
+  const packageUseCase = new PackageUseCase(fakePackageRepository)
+
+  const newPackage = await packageUseCase.execute({
     deliveryDriverId: '1',
     recipientId: '1',
     title: 'Novo pacote',

@@ -1,5 +1,5 @@
-import { randomUUID } from "crypto"
-import { PackageStatusEnum } from "../value-objects/package-status-enum"
+import { PackageStatusEnum } from "../enums/package-status-enum"
+import { Entity } from "src/core/entity"
 
 interface PackageProps {
   title: string
@@ -9,20 +9,8 @@ interface PackageProps {
   status: PackageStatusEnum
 }
 
-export class Package {
-  public id: string
-  public title: string
-  public content: string
-  public recipientId: string
-  public deliveryDriverId: string
-  public status: PackageStatusEnum
-
-  constructor(props: PackageProps, id?: string) {
-    this.id = id ?? randomUUID()
-    this.title = props.title
-    this.content = props.content
-    this.status = props.status
-    this.recipientId = props.recipientId
-    this.deliveryDriverId = props.deliveryDriverId
+export class Package extends Entity<PackageProps> {
+  get content() {
+    return this.props.content
   }
 }
