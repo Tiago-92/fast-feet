@@ -2,6 +2,7 @@ import { Package } from '../entities/package'
 import { PackageRepository } from '../repositories/package-repository'
 import { PackageStatusEnum } from '../enums/package-status-enum'
 import { UniqueEntityID } from 'src/core/unique-entity-id'
+import { Either, right } from '@/core/either'
 
 interface PackageUseCaseRequest {
   deliveryDriverId: UniqueEntityID
@@ -11,6 +12,13 @@ interface PackageUseCaseRequest {
   status: PackageStatusEnum
   createdAt: Date
 }
+
+type PackageUseCaseaseResponse = Either<
+  null,
+  {
+    packageContent: Package
+  }
+>
 
 export class PackageUseCase {
   constructor(private packageRepository: PackageRepository) {}
@@ -22,7 +30,7 @@ export class PackageUseCase {
     title,
     status,
     createdAt,
-  }: PackageUseCaseRequest) {
+  }: PackageUseCaseRequest): Promise<PackageUseCaseaseResponse> {
     const packageContent = new Package({
       title,
       content,
@@ -34,6 +42,8 @@ export class PackageUseCase {
 
     await this.packageRepository.create(packageContent)
 
-    return packageContent
+    return right({
+      packageContent,
+    })
   }
 }

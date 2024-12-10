@@ -3,6 +3,12 @@
 /node_modules
 /build
 
+# Env
+.env
+
+# Docker
+data
+
 # Logs
 logs
 *.log

@@ -1,26 +1,32 @@
 import { PackageUseCase } from './package'
 import { PackageStatusEnum } from '../enums/package-status-enum'
-import { PackageRepository } from '../repositories/package-repository'
-import { Package } from '../entities/package'
 import { UniqueEntityID } from 'src/core/unique-entity-id'
+import { InMemoryPackageRepository } from 'test/repositories/in-memory-package-repositoy'
+import { isRight } from '@/core/either'
 
-const fakePackageRepository: PackageRepository = {
-  create: async (packageContent: Package) => {
-    return packageContent
-  },
-}
+let inMemoryPackageRepository: InMemoryPackageRepository
+let sut: PackageUseCase
 
-test('create an package', async () => {
-  const packageUseCase = new PackageUseCase(fakePackageRepository)
+describe('Create package', () => {
+  beforeEach(() => {
+    inMemoryPackageRepository = new InMemoryPackageRepository()
 
-  const newPackage = await packageUseCase.execute({
-    deliveryDriverId: new UniqueEntityID(),
-    recipientId: new UniqueEntityID(),
-    createdAt: new Date(),
-    title: 'Novo pacote',
-    content: 'Novo pacote',
-    status: PackageStatusEnum.DELIVERED,
+    sut = new PackageUseCase(inMemoryPackageRepository)
   })
 
-  expect(newPackage.content).toEqual('Novo pacote')
+  it('should be able to create a package', async () => {
+    const result = await sut.execute({
+      deliveryDriverId: new UniqueEntityID(),
+      recipientId: new UniqueEntityID(),
+      createdAt: new Date(),
+      title: 'Novo pacote',
+      content: 'Novo pacote',
+      status: PackageStatusEnum.DELIVERED,
+    })
+
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryPackageRepository.items[0]).toEqual(
+      result.value?.packageContent,
+    )
+  })
 })
