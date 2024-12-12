@@ -1,6 +1,7 @@
 import { UniqueEntityID } from 'src/core/unique-entity-id'
-import { PackageStatusEnum } from '../enums/package-status-enum'
+import { PackageStatusEnum } from '@/domain/enums/package-status-enum'
 import { Entity } from 'src/core/entity'
+import { Optional } from '@/core/types'
 
 interface PackageProps {
   title: string
@@ -38,5 +39,20 @@ export class Package extends Entity<PackageProps> {
 
   set content(content: string) {
     this.props.content = content
+  }
+
+  static create(
+    props: Optional<PackageProps, 'createdAt'>,
+    id?: UniqueEntityID,
+  ) {
+    const packageContent = new Package(
+      {
+        ...props,
+        createdAt: new Date(),
+      },
+      id,
+    )
+
+    return packageContent
   }
 }
