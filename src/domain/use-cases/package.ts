@@ -1,4 +1,4 @@
-import { Package } from '../entities/package'
+import { Package } from '../package/enterprise/entities/package'
 import { PackageRepository } from '../package/application/repositories/package-repository'
 import { PackageStatusEnum } from '../enums/package-status-enum'
 import { UniqueEntityID } from 'src/core/unique-entity-id'
@@ -21,7 +21,7 @@ type PackageUseCaseaseResponse = Either<
 >
 
 export class PackageUseCase {
-  constructor(private packageRepository: PackageRepository) { }
+  constructor(private packageRepository: PackageRepository) {}
 
   async execute({
     deliveryDriverId,
@@ -31,7 +31,7 @@ export class PackageUseCase {
     status,
     createdAt,
   }: PackageUseCaseRequest): Promise<PackageUseCaseaseResponse> {
-    const packageContent = new Package({
+    const packageContent = Package.create({
       title,
       content,
       status,

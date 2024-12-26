@@ -31,7 +31,7 @@ export class PackageUseCase {
     status,
     createdAt,
   }: PackageUseCaseRequest): Promise<PackageUseCaseaseResponse> {
-    const packageContent = new Package({
+    const packageContent = Package.create({
       title,
       content,
       status,
