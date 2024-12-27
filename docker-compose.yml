@@ -1,9 +1,7 @@
-version: '2.31.0'
-
 services:
   postgres:
     container_name: fast-feet-pg
-    image: postgres
+    image: postgres:16
     ports:
       - 5432:5432
     environment:

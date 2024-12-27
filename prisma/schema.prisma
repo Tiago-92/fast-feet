@@ -7,22 +7,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Recipient {
-  id      String    @id @default(uuid())
-  name    String
-  packages Package[]
+enum UserRole {
+  DELIVERED_DRIVER
+  RECIPIENT
+}
+
+model User {
+  id                String    @id @default(uuid())
+  name              String
+  email             String    @unique
+  password          String
+  role              UserRole  @default(RECIPIENT)
+  deliveredPackages Package[] @relation("Deliverer")
+  receivedPackages  Package[] @relation("Recipient")
+
+  @@map("users")
 }
 
 model Package {
-  id        String    @id @default(uuid())
-  title     String
-  content   String
-  status    String
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  recipientId String @map("recipient_id")
+  id          String    @id @default(uuid())
+  title       String
+  content     String
+  status      String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  delivererId String    @map("deliverer_id")
+  recipientId String    @map("recipient_id")
 
-  recipient   Recipient @relation(fields: [recipientId], references: [id])
-  
+  deliverer User @relation("Deliverer", fields: [delivererId], references: [id])
+  recipient User @relation("Recipient", fields: [recipientId], references: [id])
+
   @@map("packages")
 }
