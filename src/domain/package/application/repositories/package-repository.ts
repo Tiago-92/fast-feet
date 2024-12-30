@@ -1,5 +1,5 @@
 import { Package } from '../../enterprise/entities/package'
 
-export interface PackageRepository {
-  create(packageContent: Package): Promise<void>
+export abstract class PackageRepository {
+  abstract create(packageContent: Package): Promise<void>
 }

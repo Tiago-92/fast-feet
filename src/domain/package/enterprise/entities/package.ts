@@ -8,8 +8,8 @@ interface PackageProps {
   content: string
   status: PackageStatusEnum
   createdAt: Date
-  recipientId: UniqueEntityID
-  deliveryDriverId: UniqueEntityID
+  recipientId: string | UniqueEntityID
+  delivererId: string | UniqueEntityID
 }
 
 export class Package extends Entity<PackageProps> {
@@ -33,8 +33,8 @@ export class Package extends Entity<PackageProps> {
     return this.props.recipientId
   }
 
-  get deliveryDriverId() {
-    return this.props.deliveryDriverId
+  get delivererId() {
+    return this.props.delivererId
   }
 
   set content(content: string) {
@@ -48,7 +48,7 @@ export class Package extends Entity<PackageProps> {
     const packageContent = new Package(
       {
         ...props,
-        createdAt: new Date(),
+        createdAt: props.createdAt ?? new Date(),
       },
       id,
     )

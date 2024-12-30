@@ -1,16 +1,15 @@
 import { Package } from '../package/enterprise/entities/package'
 import { PackageRepository } from '../package/application/repositories/package-repository'
 import { PackageStatusEnum } from '../enums/package-status-enum'
-import { UniqueEntityID } from 'src/core/unique-entity-id'
 import { Either, right } from '@/core/either'
+import { Injectable } from '@nestjs/common'
 
 interface PackageUseCaseRequest {
-  deliveryDriverId: UniqueEntityID
-  recipientId: UniqueEntityID
+  delivererId: string
+  recipientId: string
   title: string
   content: string
   status: PackageStatusEnum
-  createdAt: Date
 }
 
 type PackageUseCaseaseResponse = Either<
@@ -19,25 +18,23 @@ type PackageUseCaseaseResponse = Either<
     packageContent: Package
   }
 >
-
+@Injectable()
 export class PackageUseCase {
   constructor(private packageRepository: PackageRepository) {}
 
   async execute({
-    deliveryDriverId,
+    delivererId,
     recipientId,
     content,
     title,
     status,
-    createdAt,
   }: PackageUseCaseRequest): Promise<PackageUseCaseaseResponse> {
     const packageContent = Package.create({
       title,
       content,
       status,
-      deliveryDriverId,
+      delivererId,
       recipientId,
-      createdAt,
     })
 
     await this.packageRepository.create(packageContent)

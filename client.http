@@ -1,0 +1,27 @@
+@baseUrl = http://localhost:3333
+
+# @name create_account
+POST {{baseUrl}}/accounts
+Content-Type: application/json
+
+{
+  "name": "Tiago Amaral",
+  "email": "tiago@teste.com",
+  "password": "123545",
+  "role": "RECIPIENT"
+}
+
+###
+
+# @name create_package
+
+POST {{baseUrl}}/packages
+Content-Type: application/json
+
+{
+  "title": "Pacote 01 Exemplo",
+  "content": "Contéudo exemplo",
+  "status": "delivered",
+  "recipientId": "97500a05-6bee-431b-9178-86952f2b0ea5",
+  "delivererId": "d37dc79b-94ec-4dff-ad8b-a30509c3d521"
+}
