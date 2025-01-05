@@ -17,7 +17,7 @@ model User {
   name              String
   email             String    @unique
   password          String
-  role              UserRole  @default(RECIPIENT)
+  role              String
   deliveredPackages Package[] @relation("Deliverer")
   receivedPackages  Package[] @relation("Recipient")
 

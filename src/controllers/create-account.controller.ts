@@ -1,39 +1,46 @@
-import { PrismaService } from '@/prisma/prisma.service'
+import { hash } from 'bcryptjs'
+import { z } from 'zod'
 import {
+  BadRequestException,
   Body,
-  ConflictException,
   Controller,
   HttpCode,
+  Injectable,
   Post,
 } from '@nestjs/common'
-import { UserRole } from '@prisma/client'
+import { AccountUseCase } from '@/domain/use-cases/account'
+import { UserRoleEnum } from '@/domain/enums/user-role-enum'
 
+const createAccountBodySchema = z.object({
+  name: z.string(),
+  email: z.string(),
+  password: z.string(),
+  role: z.nativeEnum(UserRoleEnum),
+})
+
+type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>
+
+Injectable()
 @Controller('/accounts')
 export class CreateAccountController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private createAccount: AccountUseCase) {}
 
   @Post()
   @HttpCode(201)
-  async handle(@Body() body: any) {
-    const { name, email, password, role } = body
+  async handle(@Body() body: CreateAccountBodySchema) {
+    const { name, email, password, role } = createAccountBodySchema.parse(body)
 
-    const userWithSameEmail = await this.prisma.user.findUnique({
-      where: {
-        email,
-      },
+    const hashedPassword = await hash(password, 8)
+
+    const result = await this.createAccount.execute({
+      name,
+      email,
+      password: hashedPassword,
+      role,
     })
 
-    if (userWithSameEmail) {
-      throw new ConflictException('User with same e-mail adress already exists')
+    if (result.isLeft()) {
+      throw new BadRequestException()
     }
-
-    await this.prisma.user.create({
-      data: {
-        name,
-        email,
-        password,
-        role,
-      },
-    })
   }
 }

@@ -5,10 +5,10 @@ POST {{baseUrl}}/accounts
 Content-Type: application/json
 
 {
-  "name": "Tiago Amaral",
-  "email": "tiago@teste.com",
+  "name": "Pedro Almeida",
+  "email": "pedro@teste.com",
   "password": "123545",
-  "role": "RECIPIENT"
+  "role": "delivered_driver"
 }
 
 ###
@@ -22,6 +22,6 @@ Content-Type: application/json
   "title": "Pacote 01 Exemplo",
   "content": "Contéudo exemplo",
   "status": "delivered",
-  "recipientId": "97500a05-6bee-431b-9178-86952f2b0ea5",
-  "delivererId": "d37dc79b-94ec-4dff-ad8b-a30509c3d521"
+  "recipientId": "efe981a3-7ff2-45fe-ba29-2b1b790e252c",
+  "delivererId": "10512ca7-94c4-4786-ac4c-480d0326b1ad"
 }

@@ -1,9 +1,12 @@
+import { UniqueEntityID } from '@/core/unique-entity-id'
+import { UserRoleEnum } from '@/domain/enums/user-role-enum'
 import { Entity } from 'src/core/entity'
 
 interface UserProps {
   name: string
   email: string
-  passwaord: string
+  password: string
+  role: UserRoleEnum
 }
 
 export class User extends Entity<UserProps> {
@@ -16,6 +19,16 @@ export class User extends Entity<UserProps> {
   }
 
   get password() {
-    return this.props.passwaord
+    return this.props.password
+  }
+
+  get role() {
+    return this.props.role
+  }
+
+  static create(props: UserProps, id?: UniqueEntityID) {
+    const user = new User(props, id)
+
+    return user
   }
 }
