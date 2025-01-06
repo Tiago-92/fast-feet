@@ -7,7 +7,9 @@ import {
   HttpCode,
   BadRequestException,
   Injectable,
+  UseGuards,
 } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
 import { z } from 'zod'
 
 const createPackageBodySchema = z.object({
@@ -22,6 +24,7 @@ type CreatePackageBodySchema = z.infer<typeof createPackageBodySchema>
 
 @Injectable()
 @Controller('/packages')
+@UseGuards(AuthGuard('jwt'))
 export class CreatePackageController {
   constructor(private createPackage: PackageUseCase) {}
 
