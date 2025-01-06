@@ -8,10 +8,24 @@ import { AccountUseCase } from './domain/use-cases/account'
 import { UserRepository } from './domain/package/application/repositories/user-repository'
 import { PrismaUserRepository } from './infra/database/repositories/prisma-user-repository'
 import { CreateAccountController } from './controllers/create-account.controller'
+import { ConfigModule } from '@nestjs/config'
+import { envSchema } from './env'
+import { AuthModule } from './auth/auth.module'
+import { AuthenticateController } from './controllers/authenticate-controller'
 
 @Module({
-  imports: [],
-  controllers: [CreatePackageController, CreateAccountController],
+  imports: [
+    ConfigModule.forRoot({
+      validate: (env) => envSchema.parse(env),
+      isGlobal: true,
+    }),
+    AuthModule,
+  ],
+  controllers: [
+    CreatePackageController,
+    CreateAccountController,
+    AuthenticateController,
+  ],
   providers: [
     PrismaService,
     PackageUseCase,

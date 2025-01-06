@@ -7,9 +7,11 @@ import {
   HttpCode,
   Injectable,
   Post,
+  UsePipes,
 } from '@nestjs/common'
 import { AccountUseCase } from '@/domain/use-cases/account'
 import { UserRoleEnum } from '@/domain/enums/user-role-enum'
+import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
 
 const createAccountBodySchema = z.object({
   name: z.string(),
@@ -27,8 +29,9 @@ export class CreateAccountController {
 
   @Post()
   @HttpCode(201)
+  @UsePipes(new ZodValidationPipe(createAccountBodySchema))
   async handle(@Body() body: CreateAccountBodySchema) {
-    const { name, email, password, role } = createAccountBodySchema.parse(body)
+    const { name, email, password, role } = body
 
     const hashedPassword = await hash(password, 8)
 
