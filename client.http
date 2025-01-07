@@ -35,3 +35,9 @@ Authorization: Bearer {{authToken}}
   "recipientId": "efe981a3-7ff2-45fe-ba29-2b1b790e252c",
   "delivererId": "10512ca7-94c4-4786-ac4c-480d0326b1ad"
 }
+
+###
+
+# @name delete_delivered_driver
+
+DELETE {{baseUrl}}/delivered-driver/e324c8ef-bf60-463b-b907-9eee49c03674

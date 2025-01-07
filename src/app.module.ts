@@ -12,6 +12,10 @@ import { ConfigModule } from '@nestjs/config'
 import { envSchema } from './env'
 import { AuthModule } from './auth/auth.module'
 import { AuthenticateController } from './controllers/authenticate-controller'
+import { DeliveredDriverController } from './controllers/delete-delivered-driver-controller'
+import { DeliveredDriverUseCase } from './domain/use-cases/delivered-driver'
+import { DeliveredDriverRepository } from './domain/package/application/repositories/delivered-driver-repository'
+import { PrismaDeliveredDriverRepository } from './infra/database/repositories/prisma-delivered-driver-repository'
 
 @Module({
   imports: [
@@ -22,12 +26,14 @@ import { AuthenticateController } from './controllers/authenticate-controller'
     AuthModule,
   ],
   controllers: [
+    DeliveredDriverController,
     CreatePackageController,
     CreateAccountController,
     AuthenticateController,
   ],
   providers: [
     PrismaService,
+    DeliveredDriverUseCase,
     PackageUseCase,
     AccountUseCase,
     {
@@ -37,6 +43,10 @@ import { AuthenticateController } from './controllers/authenticate-controller'
     {
       provide: UserRepository,
       useClass: PrismaUserRepository,
+    },
+    {
+      provide: DeliveredDriverRepository,
+      useClass: PrismaDeliveredDriverRepository,
     },
   ],
 })
