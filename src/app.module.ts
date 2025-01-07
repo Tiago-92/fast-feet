@@ -13,7 +13,7 @@ import { envSchema } from './env'
 import { AuthModule } from './auth/auth.module'
 import { AuthenticateController } from './controllers/authenticate-controller'
 import { DeliveredDriverController } from './controllers/delete-delivered-driver-controller'
-import { CreateDeliveredDriverUseCase } from './domain/use-cases/create-delivered-driver'
+import { DeleteDeliveredDriverUseCase } from './domain/use-cases/delete-delivered-driver'
 import { DeliveredDriverRepository } from './domain/package/application/repositories/delivered-driver-repository'
 import { PrismaDeliveredDriverRepository } from './infra/database/repositories/prisma-delivered-driver-repository'
 import { FetchDeliveredDriverById } from './controllers/fetch-delivered-driver-by-id'
@@ -36,7 +36,7 @@ import { GetDeliveredDriverUserCase } from './domain/use-cases/get-delivered-dri
   ],
   providers: [
     PrismaService,
-    CreateDeliveredDriverUseCase,
+    DeleteDeliveredDriverUseCase,
     PackageUseCase,
     AccountUseCase,
     GetDeliveredDriverUserCase,
