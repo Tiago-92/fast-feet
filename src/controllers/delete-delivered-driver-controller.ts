@@ -1,10 +1,10 @@
 import { Controller, Delete, HttpCode, Injectable, Param } from '@nestjs/common'
-import { DeliveredDriverUseCase } from '@/domain/use-cases/delivered-driver'
+import { CreateDeliveredDriverUseCase } from '@/domain/use-cases/create-delivered-driver'
 
 Injectable()
 @Controller('/delivered-driver/:id')
 export class DeliveredDriverController {
-  constructor(private deliveredDriver: DeliveredDriverUseCase) {}
+  constructor(private deliveredDriver: CreateDeliveredDriverUseCase) {}
 
   @Delete()
   @HttpCode(204)

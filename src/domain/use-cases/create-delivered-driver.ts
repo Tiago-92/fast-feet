@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common'
 import { DeliveredDriverRepository } from '../package/application/repositories/delivered-driver-repository'
 
-interface DeliveredDriverUseCaseRequest {
+interface CreateDeliveredDriverUseCaseRequest {
   id: string
 }
 
 @Injectable()
-export class DeliveredDriverUseCase {
+export class CreateDeliveredDriverUseCase {
   constructor(private deliveredDriveredRepository: DeliveredDriverRepository) {}
 
-  async execute({ id }: DeliveredDriverUseCaseRequest): Promise<void> {
+  async execute({ id }: CreateDeliveredDriverUseCaseRequest): Promise<void> {
     await this.deliveredDriveredRepository.delete(id)
   }
 }
