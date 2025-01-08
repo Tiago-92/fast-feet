@@ -6,6 +6,7 @@ import { Test } from '@nestjs/testing'
 import { JwtService } from '@nestjs/jwt'
 import request from 'supertest'
 import { ConfigService } from '@nestjs/config'
+import { UserRoleEnum } from '@/domain/enums/user-role-enum'
 
 describe('Create Package (E2E)', () => {
   let app: INestApplication
@@ -13,7 +14,6 @@ describe('Create Package (E2E)', () => {
   let configService: ConfigService
   let jwtService: JwtService
   let delivererId: string
-  let recipientId: string
   let token: string
 
   beforeAll(async () => {
@@ -31,8 +31,7 @@ describe('Create Package (E2E)', () => {
 
     await app.init()
 
-    // Criar um entregador válido
-    const deliverer = await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         name: 'Entregador 1',
         email: 'entregador@fast.com',
@@ -40,42 +39,38 @@ describe('Create Package (E2E)', () => {
         role: 'DELIVERED_DRIVER',
       },
     })
-    delivererId = deliverer.id
+    delivererId = user.id
 
-    // Criar um destinatário válido
-    const recipient = await prisma.user.create({
-      data: {
-        name: 'Destinatário 1',
-        email: 'destinatario@fast.com',
-        password: '123456',
-        role: 'RECIPIENT',
-      },
-    })
-    recipientId = recipient.id
-
-    // Gerar token válido para testes
     token = jwtService.sign({ sub: delivererId })
   })
 
-  test('[POST] /packages', async () => {
+  afterAll(async () => {
+    await prisma.user.deleteMany({
+      where: {
+        email: { in: ['entregador@fast.com', 'johndoe@example.com'] },
+      },
+    })
+    await app.close()
+  })
+
+  it('[POST] /accounts', async () => {
     const response = await request(app.getHttpServer())
-      .post('/packages')
+      .post('/accounts')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        title: 'Pacote 01 Exemplo',
-        content: 'Contéudo exemplo',
-        status: 'delivered',
-        recipientId,
-        delivererId,
+        name: 'John Doe',
+        email: 'johndoe@example.com',
+        password: '123456',
+        role: UserRoleEnum.RECIPIENT,
       })
 
-    const packageOnDatabase = await prisma.package.findFirst({
+    const userOnDatabase = await prisma.user.findFirst({
       where: {
-        content: 'Contéudo exemplo',
+        email: 'johndoe@example.com',
       },
     })
 
     expect(response.statusCode).toBe(201)
-    expect(packageOnDatabase).toBeTruthy()
+    expect(userOnDatabase).toBeTruthy()
   })
 })
