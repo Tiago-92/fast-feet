@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common'
 import { DeliveredDriverRepository } from '@/domain/package/application/repositories/delivered-driver-repository'
 import { User } from '@/domain/package/enterprise/entities/user'
 import { PrismaUserMapper } from '../mappers/prisma-user-mapper'
+import { UserRoleEnum } from '@/domain/enums/user-role-enum'
 
 @Injectable()
 export class PrismaDeliveredDriverRepository
@@ -32,5 +33,20 @@ export class PrismaDeliveredDriverRepository
     if (!user) {
       throw new Error('Usuário não encontrado.')
     }
+  }
+
+  async update(
+    id: string,
+    data: {
+      name: string
+      email: string
+      password: string
+      role: UserRoleEnum.DELIVERED_DRIVER
+    },
+  ) {
+    return await this.prisma.user.update({
+      where: { id },
+      data,
+    })
   }
 }
