@@ -13,26 +13,21 @@ export class PrismaDeliveredDriverRepository
 
   async findById(id: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
-      where: {
-        id,
-      },
-    })
-
-    if (!user) {
-      throw new Error('Usuário não encontrado.')
-    }
-
-    return PrismaUserMapper.toDomain(user)
-  }
-
-  async delete(id: string) {
-    const user = await this.prisma.user.delete({
       where: { id },
     })
 
     if (!user) {
       throw new Error('Usuário não encontrado.')
     }
+
+    // Mapeia o usuário retornado pela Prisma para a entidade User
+    return PrismaUserMapper.toDomain(user)
+  }
+
+  async delete(id: string) {
+    await this.prisma.user.delete({
+      where: { id },
+    })
   }
 
   async update(
@@ -43,10 +38,15 @@ export class PrismaDeliveredDriverRepository
       password: string
       role: UserRoleEnum.DELIVERED_DRIVER
     },
-  ) {
-    return await this.prisma.user.update({
+  ): Promise<User | null> {
+    const updatedUser = await this.prisma.user.update({
       where: { id },
       data,
     })
+
+    if (!updatedUser) {
+      return null
+    }
+    return PrismaUserMapper.toDomain(updatedUser)
   }
 }

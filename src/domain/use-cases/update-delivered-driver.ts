@@ -1,3 +1,4 @@
+import { UserRoleEnum } from '../enums/user-role-enum'
 import { DeliveredDriverRepository } from '../package/application/repositories/delivered-driver-repository'
 import { Injectable } from '@nestjs/common'
 
@@ -7,7 +8,7 @@ export class UpdateDeliveredDriverUseCase {
 
   async execute(
     id: string,
-    data: { name: string; email: string; password: string; role: string },
+    data: { name: string; email: string; password: string; role: UserRoleEnum },
   ) {
     const updatedUser = await this.deliveredDriverRepository.update(id, data)
 

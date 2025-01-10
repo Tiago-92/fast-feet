@@ -1,3 +1,4 @@
+import { UserRoleEnum } from '@/domain/enums/user-role-enum'
 import { UpdateDeliveredDriverUseCase } from '@/domain/use-cases/update-delivered-driver'
 import {
   Controller,
@@ -18,7 +19,7 @@ export class UpdateDeliveredDriverController {
   async handle(
     @Param('id') userId: string,
     @Body()
-    data: { name: string; email: string; password: string; role: string },
+    data: { name: string; email: string; password: string; role: UserRoleEnum },
   ) {
     const result = await this.deliveredDriver.execute(userId, data)
 
