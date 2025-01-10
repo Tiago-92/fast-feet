@@ -1,17 +1,6 @@
 import { DeliveredDriverRepository } from '../package/application/repositories/delivered-driver-repository'
 import { Injectable } from '@nestjs/common'
 
-/* interface UpdateDeliveredDriverUseCaseRequest {
-  userId: string
-}
-
-type UpdateDeliveredDriverUserCaseResponse = Either<
-  NotAllowedError,
-  {
-    user: User
-  }
-> */
-
 @Injectable()
 export class UpdateDeliveredDriverUseCase {
   constructor(private deliveredDriverRepository: DeliveredDriverRepository) {}
