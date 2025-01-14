@@ -7,4 +7,14 @@ export class InMemoryPackageRepository implements PackageRepository {
   async create(packageContent: Package) {
     this.items.push(packageContent)
   }
+
+  async findById(id: string): Promise<Package | null> {
+    const packageFound = this.items.find((user) => user.id.toString() === id)
+
+    if (!packageFound) {
+      throw new Error('Esse pacote não foi encontrado.')
+    }
+
+    return packageFound
+  }
 }

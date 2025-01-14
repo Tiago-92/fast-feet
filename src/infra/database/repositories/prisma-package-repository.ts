@@ -15,4 +15,16 @@ export class PrismaPackageRepository implements PackageRepository {
       data: prismaPackageData,
     })
   }
+
+  async findById(id: string): Promise<Package | null> {
+    const packageContent = await this.prisma.package.findUnique({
+      where: { id },
+    })
+
+    if (!packageContent) {
+      throw new Error('A emcomenda não foi encontrada.')
+    }
+
+    return PrismaPackageMapper.toDomain(packageContent)
+  }
 }

@@ -20,6 +20,8 @@ import { FetchDeliveredDriverById } from './controllers/fetch-delivered-driver-b
 import { GetDeliveredDriverUserCase } from './domain/use-cases/get-delivered-driver'
 import { UpdateDeliveredDriverUseCase } from './domain/use-cases/update-delivered-driver'
 import { UpdateDeliveredDriverController } from './controllers/update-delivered-driver.controller'
+import { GetPackageController } from './controllers/get-package-controller'
+import { GetPackageUseCase } from './domain/use-cases/get-package'
 
 @Module({
   imports: [
@@ -36,6 +38,7 @@ import { UpdateDeliveredDriverController } from './controllers/update-delivered-
     AuthenticateController,
     FetchDeliveredDriverById,
     UpdateDeliveredDriverController,
+    GetPackageController,
   ],
   providers: [
     PrismaService,
@@ -44,6 +47,7 @@ import { UpdateDeliveredDriverController } from './controllers/update-delivered-
     AccountUseCase,
     GetDeliveredDriverUserCase,
     UpdateDeliveredDriverUseCase,
+    GetPackageUseCase,
     {
       provide: PackageRepository,
       useClass: PrismaPackageRepository,
