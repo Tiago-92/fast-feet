@@ -17,4 +17,10 @@ export class InMemoryPackageRepository implements PackageRepository {
 
     return packageFound
   }
+
+  async findAll(): Promise<Package[]> {
+    const allPackages = this.items
+
+    return allPackages
+  }
 }

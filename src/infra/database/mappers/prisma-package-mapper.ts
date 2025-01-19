@@ -29,4 +29,8 @@ export class PrismaPackageMapper {
       createdAt: packageContent.createdAt,
     }
   }
+
+  static toDomainArray(rawArray: PrismaPackage[]): Package[] {
+    return rawArray.map(this.toDomain)
+  }
 }

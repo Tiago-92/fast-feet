@@ -22,9 +22,15 @@ export class PrismaPackageRepository implements PackageRepository {
     })
 
     if (!packageContent) {
-      throw new Error('A emcomenda não foi encontrada.')
+      throw new Error('A encomenda não foi encontrada.')
     }
 
     return PrismaPackageMapper.toDomain(packageContent)
+  }
+
+  async findAll(): Promise<Package[]> {
+    const allPackages = await this.prisma.package.findMany()
+
+    return PrismaPackageMapper.toDomainArray(allPackages)
   }
 }
