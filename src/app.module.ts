@@ -24,6 +24,8 @@ import { GetPackageController } from './controllers/get-package-controller'
 import { GetPackageUseCase } from './domain/use-cases/get-package'
 import { GetAllPackageUseCase } from './domain/use-cases/get-all-packages'
 import { GetAllPackageController } from './controllers/get-all-packages.controller'
+import { UpdatePackageController } from './controllers/update-package-controller'
+import { UpdatePackeUseCase } from './domain/use-cases/update-package'
 
 @Module({
   imports: [
@@ -42,6 +44,7 @@ import { GetAllPackageController } from './controllers/get-all-packages.controll
     UpdateDeliveredDriverController,
     GetPackageController,
     GetAllPackageController,
+    UpdatePackageController,
   ],
   providers: [
     PrismaService,
@@ -52,6 +55,7 @@ import { GetAllPackageController } from './controllers/get-all-packages.controll
     UpdateDeliveredDriverUseCase,
     GetPackageUseCase,
     GetAllPackageUseCase,
+    UpdatePackeUseCase,
     {
       provide: PackageRepository,
       useClass: PrismaPackageRepository,

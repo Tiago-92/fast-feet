@@ -3,6 +3,7 @@ import { Package } from '@/domain/package/enterprise/entities/package'
 import { PrismaService } from '@/prisma/prisma.service'
 import { PrismaPackageMapper } from '../mappers/prisma-package-mapper'
 import { Injectable } from '@nestjs/common'
+import { PackageStatusEnum } from '@/domain/enums/package-status-enum'
 
 @Injectable()
 export class PrismaPackageRepository implements PackageRepository {
@@ -32,5 +33,21 @@ export class PrismaPackageRepository implements PackageRepository {
     const allPackages = await this.prisma.package.findMany()
 
     return PrismaPackageMapper.toDomainArray(allPackages)
+  }
+
+  async update(
+    id: string,
+    data: { title: string; content: string; status: PackageStatusEnum },
+  ): Promise<Package | null> {
+    const updatePackage = await this.prisma.package.update({
+      where: { id },
+      data,
+    })
+
+    if (!updatePackage) {
+      return null
+    }
+
+    return PrismaPackageMapper.toDomain(updatePackage)
   }
 }
