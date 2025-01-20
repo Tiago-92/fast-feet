@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ "$1" = "start" ]; then
+  echo "Iniciando o container do Docker..."
+  docker compose up -d
+  
+  if [ $? -ne 0 ]; then
+    echo "Falha ao iniciar os containers do Docker. Abortando."
+    exit 1
+  fi
+
+  echo "Iniciando a aplicação NestJS..."
+  pnpm run start:dev
+  
+  if [ $? -ne 0 ]; then
+    echo "Falha ao iniciar a aplicação. Verifique os logs."
+    exit 1
+  fi
+
+else
+  echo "Comando desconhecido. Use: sh dev start"
+fi
