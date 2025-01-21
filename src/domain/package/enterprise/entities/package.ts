@@ -41,6 +41,10 @@ export class Package extends Entity<PackageProps> {
     this.props.content = content
   }
 
+  public getProps() {
+    return this.props
+  }
+
   static create(
     props: Optional<PackageProps, 'createdAt'>,
     id?: UniqueEntityID,

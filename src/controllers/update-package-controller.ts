@@ -19,7 +19,13 @@ export class UpdatePackageController {
   async handle(
     @Param('id') userId: string,
     @Body()
-    data: { title: string; content: string; status: PackageStatusEnum },
+    data: {
+      title: string
+      content: string
+      status: PackageStatusEnum
+      delivererId: string
+      recipientId: string
+    },
   ) {
     const result = await this.updatePackageUseCase.execute(userId, data)
 

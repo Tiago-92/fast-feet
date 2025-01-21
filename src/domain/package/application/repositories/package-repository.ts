@@ -7,6 +7,12 @@ export abstract class PackageRepository {
   abstract findAll(): Promise<Package[]>
   abstract update(
     id: string,
-    data: { title: string; content: string; status: PackageStatusEnum },
+    data: {
+      title: string
+      content: string
+      status: PackageStatusEnum
+      recipientId: string
+      delivererId: string
+    },
   ): Promise<Package | null>
 }

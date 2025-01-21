@@ -8,7 +8,13 @@ export class UpdatePackeUseCase {
 
   async execute(
     id: string,
-    data: { title: string; content: string; status: PackageStatusEnum },
+    data: {
+      title: string
+      content: string
+      status: PackageStatusEnum
+      recipientId: string
+      delivererId: string
+    },
   ) {
     const updatedPackage = await this.packageRepository.update(id, data)
 
