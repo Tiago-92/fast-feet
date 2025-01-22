@@ -8,6 +8,7 @@ import {
   Param,
   Body,
 } from '@nestjs/common'
+import { PackageStatus } from '@prisma/client'
 
 @Injectable()
 @Controller('/package/update/:id')
@@ -22,7 +23,7 @@ export class UpdatePackageController {
     data: {
       title: string
       content: string
-      status: PackageStatusEnum
+      status: PackageStatus
       delivererId: string
       recipientId: string
     },

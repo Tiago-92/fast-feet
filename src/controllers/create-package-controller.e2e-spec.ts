@@ -64,7 +64,7 @@ describe('Create Package (E2E)', () => {
       .send({
         title: 'Pacote 01 Exemplo',
         content: 'Contéudo exemplo',
-        status: 'delivered',
+        status: 'DELIVERED',
         recipientId,
         delivererId,
       })

@@ -1,7 +1,6 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { Package } from '@/domain/package/enterprise/entities/package'
-import { Prisma, Package as PrismaPackage } from '@prisma/client'
-import { PackageStatusEnum } from '@/domain/enums/package-status-enum'
+import { PackageStatus, Prisma, Package as PrismaPackage } from '@prisma/client'
 
 export class PrismaPackageMapper {
   static toDomain(raw: PrismaPackage): Package {
@@ -11,7 +10,7 @@ export class PrismaPackageMapper {
         recipientId: new UniqueEntityID(raw.recipientId),
         title: raw.title,
         content: raw.content,
-        status: raw.status as PackageStatusEnum,
+        status: raw.status as PackageStatus,
         createdAt: raw.createdAt,
       },
       new UniqueEntityID(raw.id),

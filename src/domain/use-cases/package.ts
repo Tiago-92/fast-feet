@@ -1,15 +1,15 @@
 import { Package } from '../package/enterprise/entities/package'
 import { PackageRepository } from '../package/application/repositories/package-repository'
-import { PackageStatusEnum } from '../enums/package-status-enum'
 import { Either, right } from '@/core/either'
 import { Injectable } from '@nestjs/common'
+import { PackageStatus } from '@prisma/client'
 
 interface PackageUseCaseRequest {
   delivererId: string
   recipientId: string
   title: string
   content: string
-  status: PackageStatusEnum
+  status: PackageStatus
 }
 
 type PackageUseCaseaseResponse = Either<

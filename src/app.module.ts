@@ -26,6 +26,8 @@ import { GetAllPackageUseCase } from './domain/use-cases/get-all-packages'
 import { GetAllPackageController } from './controllers/get-all-packages.controller'
 import { UpdatePackageController } from './controllers/update-package-controller'
 import { UpdatePackeUseCase } from './domain/use-cases/update-package'
+import { GetStatusUseCase } from './domain/use-cases/get-package-status'
+import { GetStatusController } from './controllers/get-status-controller'
 
 @Module({
   imports: [
@@ -45,6 +47,7 @@ import { UpdatePackeUseCase } from './domain/use-cases/update-package'
     GetPackageController,
     GetAllPackageController,
     UpdatePackageController,
+    GetStatusController,
   ],
   providers: [
     PrismaService,
@@ -56,6 +59,7 @@ import { UpdatePackeUseCase } from './domain/use-cases/update-package'
     GetPackageUseCase,
     GetAllPackageUseCase,
     UpdatePackeUseCase,
+    GetStatusUseCase,
     {
       provide: PackageRepository,
       useClass: PrismaPackageRepository,

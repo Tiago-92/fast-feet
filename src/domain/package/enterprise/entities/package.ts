@@ -1,12 +1,12 @@
 import { UniqueEntityID } from 'src/core/unique-entity-id'
-import { PackageStatusEnum } from '@/domain/enums/package-status-enum'
 import { Entity } from 'src/core/entity'
 import { Optional } from '@/core/types'
+import { PackageStatus } from '@prisma/client'
 
 interface PackageProps {
   title: string
   content: string
-  status: PackageStatusEnum
+  status: PackageStatus
   createdAt: Date
   recipientId: string | UniqueEntityID
   delivererId: string | UniqueEntityID

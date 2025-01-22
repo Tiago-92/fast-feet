@@ -12,6 +12,13 @@ enum UserRole {
   RECIPIENT
 }
 
+enum PackageStatus {
+  PICKUP
+  AWAITING_PICKUP
+  DELIVERED
+  RETURNED
+}
+
 model User {
   id                String    @id @default(uuid())
   name              String
@@ -28,7 +35,7 @@ model Package {
   id          String    @id @default(uuid())
   title       String
   content     String
-  status      String
+  status      PackageStatus
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime? @updatedAt @map("updated_at")
   delivererId String    @map("deliverer_id")

@@ -1,8 +1,8 @@
 import { AppModule } from '@/app.module'
-import { PackageStatusEnum } from '@/domain/enums/package-status-enum'
 import { PrismaService } from '@/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
+import { PackageStatus } from '@prisma/client'
 import request from 'supertest'
 
 describe('Get All Packages (E2E)', () => {
@@ -47,7 +47,7 @@ describe('Get All Packages (E2E)', () => {
       data: {
         title: 'Embalagem 1',
         content: 'Embalagem 1',
-        status: PackageStatusEnum.AWAITING_PICKUP,
+        status: PackageStatus.AWAITING_PICKUP,
         delivererId,
         recipientId,
       },
@@ -57,7 +57,7 @@ describe('Get All Packages (E2E)', () => {
       data: {
         title: 'Embalagem 2',
         content: 'Embalagem 2',
-        status: PackageStatusEnum.DELIVERED,
+        status: PackageStatus.RETURNED,
         delivererId,
         recipientId,
       },

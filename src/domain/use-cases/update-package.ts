@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { PackageRepository } from '../package/application/repositories/package-repository'
-import { PackageStatusEnum } from '../enums/package-status-enum'
+import { PackageStatus } from '@prisma/client'
 
 @Injectable()
 export class UpdatePackeUseCase {
@@ -11,7 +11,7 @@ export class UpdatePackeUseCase {
     data: {
       title: string
       content: string
-      status: PackageStatusEnum
+      status: PackageStatus
       recipientId: string
       delivererId: string
     },

@@ -4,6 +4,7 @@ import { PackageStatusEnum } from '@/domain/enums/package-status-enum'
 import { PrismaService } from '@/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
+import { PackageStatus } from '@prisma/client'
 import request from 'supertest'
 
 describe('Update Delivred Driver (E2E)', () => {
@@ -47,7 +48,7 @@ describe('Update Delivred Driver (E2E)', () => {
       data: {
         title: 'Embalagem teste 1',
         content: 'Embalagem teste 1',
-        status: PackageStatusEnum.DELIVERED,
+        status: PackageStatus.DELIVERED,
         delivererId,
         recipientId,
       },

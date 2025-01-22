@@ -1,4 +1,3 @@
-import { PackageStatusEnum } from '@/domain/enums/package-status-enum'
 import { PackageUseCase } from '@/domain/use-cases/package'
 import {
   Controller,
@@ -10,12 +9,13 @@ import {
   UseGuards,
 } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
+import { PackageStatus } from '@prisma/client'
 import { z } from 'zod'
 
 const createPackageBodySchema = z.object({
   title: z.string(),
   content: z.string(),
-  status: z.nativeEnum(PackageStatusEnum),
+  status: z.nativeEnum(PackageStatus),
   delivererId: z.string(),
   recipientId: z.string(),
 })
