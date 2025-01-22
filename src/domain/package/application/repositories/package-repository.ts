@@ -5,7 +5,8 @@ export abstract class PackageRepository {
   abstract create(packageContent: Package): Promise<void>
   abstract findById(id: string): Promise<Package | null>
   abstract findAll(): Promise<Package[]>
-  abstract getStatus()
+  abstract getStatus(): Promise<PackageStatus[]>
+  abstract updateStatus(id: string, status: PackageStatus): Promise<Package>
   abstract update(
     id: string,
     data: {

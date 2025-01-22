@@ -51,7 +51,16 @@ export class PrismaPackageRepository implements PackageRepository {
     return PrismaPackageMapper.toDomain(updatePackage)
   }
 
-  async getStatus() {
+  async getStatus(): Promise<PackageStatus[]> {
     return Object.values(PackageStatus)
+  }
+
+  async updateStatus(id: string, status: PackageStatus): Promise<Package> {
+    const updateStatus = await this.prisma.package.update({
+      where: { id },
+      data: { status },
+    })
+
+    return PrismaPackageMapper.toDomain(updateStatus)
   }
 }
