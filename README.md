@@ -9,6 +9,24 @@
     <p align="center">
 </p>
 
+## Get Start
+
+Requisitos: Docker, Docker Compose, Node.js, pnpm
+
+```bash
+# Baixar as dependêcias do Node.js
+pnpm install
+
+```bash
+# Inicia o container docker do PostegreSQL 16 e inicia o projeto Nest.js  
+sh dev start
+
+# Executa os testes unitários
+pnpm run test
+
+# Executa os testes E2E
+pnpm run test:e2e
+
 ## Regras da aplicação
 
 - [x] A aplicação deve ter dois tipos de usuário, entregador e/ou admin
@@ -35,7 +53,7 @@
 - [ ] Somente o admin pode alterar a senha de um usuário
 - [ ] Não deve ser possível um entregador listar as encomendas de outro entregador
 
-## Stack da aplicação
+## Tecnologias
 
 - TypeScript
 - Node.js
