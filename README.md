@@ -17,7 +17,6 @@ Requisitos: Docker, Docker Compose, Node.js, pnpm
 # Baixar as dependêcias do Node.js
 pnpm install
 
-```bash
 # Inicia o container docker do PostegreSQL 16 e inicia o projeto Nest.js  
 sh dev start
 
@@ -26,6 +25,7 @@ pnpm run test
 
 # Executa os testes E2E
 pnpm run test:e2e
+```
 
 ## Regras da aplicação
 
