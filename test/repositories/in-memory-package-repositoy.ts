@@ -1,6 +1,6 @@
 import { Package } from '@/domain/package/enterprise/entities/package'
 import { PackageRepository } from '@/domain/package/application/repositories/package-repository'
-import { PackageStatusEnum } from '@/domain/enums/package-status-enum'
+import { PackageStatus } from '@prisma/client'
 
 export class InMemoryPackageRepository implements PackageRepository {
   public items: Package[] = []
@@ -30,7 +30,7 @@ export class InMemoryPackageRepository implements PackageRepository {
     data: {
       title: string
       content: string
-      status: PackageStatusEnum
+      status: PackageStatus
       recipientId: string
       delivererId: string
     },
@@ -40,7 +40,7 @@ export class InMemoryPackageRepository implements PackageRepository {
     )
 
     if (index === -1) {
-      throw new Error('A imbalagem não foi encontrada 404')
+      throw new Error('A embalagem não foi encontrada 404')
     }
 
     const packageContent = this.items[index]
@@ -50,6 +50,40 @@ export class InMemoryPackageRepository implements PackageRepository {
     const updatedPackage = Package.create(updatedProps, packageContent.id)
 
     this.items[index] = updatedPackage
+
+    return updatedPackage
+  }
+
+  async getStatus(): Promise<PackageStatus[]> {
+    return Object.values(PackageStatus)
+  }
+
+  async updateStatus(id: string, status: PackageStatus): Promise<Package> {
+    if (!Object.values(PackageStatus).includes(status)) {
+      throw new Error(`Invalid status: ${status}`)
+    }
+
+    const packageIndex = this.items.findIndex((pkg) => pkg.id.toString() === id)
+
+    if (packageIndex === -1) {
+      throw new Error(`Package with ID ${id} not found`)
+    }
+
+    const currentPackage = this.items[packageIndex]
+
+    const updatedPackage = Package.create(
+      {
+        title: currentPackage.title,
+        content: currentPackage.content,
+        status,
+        recipientId: currentPackage.recipientId,
+        delivererId: currentPackage.delivererId,
+        createdAt: currentPackage.createdAt,
+      },
+      currentPackage.id,
+    )
+
+    this.items[packageIndex] = updatedPackage
 
     return updatedPackage
   }

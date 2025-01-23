@@ -1,8 +1,8 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { InMemoryPackageRepository } from 'test/repositories/in-memory-package-repositoy'
 import { Package } from '../package/enterprise/entities/package'
-import { PackageStatusEnum } from '../enums/package-status-enum'
 import { GetAllPackageUseCase } from './get-all-packages'
+import { PackageStatus } from '@prisma/client'
 
 let inMemoryPackageRepository: InMemoryPackageRepository
 let sut: GetAllPackageUseCase
@@ -20,7 +20,7 @@ describe('Get Package Use Case', () => {
         content: 'Embalagem 1',
         delivererId: 'sdfebe5cewcvhgc5ecwgdc',
         recipientId: '5dc5ewc1sdfefcece55c1',
-        status: PackageStatusEnum.PICKUP,
+        status: PackageStatus.AWAITING_PICKUP,
       },
       new UniqueEntityID('xhey515ec48e54e8'),
     )
@@ -31,7 +31,7 @@ describe('Get Package Use Case', () => {
         content: 'Embalagem 2',
         delivererId: 'sdfebe5cewcvhgc5ecwgdc',
         recipientId: '5dc5ewc1sdfefcece55c1',
-        status: PackageStatusEnum.PICKUP,
+        status: PackageStatus.AWAITING_PICKUP,
       },
       new UniqueEntityID('cdcd5ce8c5czce'),
     )
