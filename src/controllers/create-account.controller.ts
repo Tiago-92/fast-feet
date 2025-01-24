@@ -10,14 +10,14 @@ import {
   UsePipes,
 } from '@nestjs/common'
 import { AccountUseCase } from '@/domain/use-cases/account'
-import { UserRoleEnum } from '@/domain/enums/user-role-enum'
 import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { UserRole } from '@prisma/client'
 
 const createAccountBodySchema = z.object({
   name: z.string(),
   email: z.string(),
   password: z.string(),
-  role: z.nativeEnum(UserRoleEnum),
+  role: z.nativeEnum(UserRole),
 })
 
 type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>

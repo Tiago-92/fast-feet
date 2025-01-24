@@ -24,7 +24,10 @@ model User {
   name              String
   email             String    @unique
   password          String
-  role              String
+  role              UserRole
+  latitude          String
+  longitude         String
+  phone             String
   deliveredPackages Package[] @relation("Deliverer")
   receivedPackages  Package[] @relation("Recipient")
 
@@ -36,6 +39,8 @@ model Package {
   title       String
   content     String
   status      PackageStatus
+  latitude    String
+  longitude   String
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime? @updatedAt @map("updated_at")
   delivererId String    @map("deliverer_id")

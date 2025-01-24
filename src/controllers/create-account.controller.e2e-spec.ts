@@ -6,7 +6,7 @@ import { Test } from '@nestjs/testing'
 import { JwtService } from '@nestjs/jwt'
 import request from 'supertest'
 import { ConfigService } from '@nestjs/config'
-import { UserRoleEnum } from '@/domain/enums/user-role-enum'
+import { UserRole } from '@prisma/client'
 
 describe('Create Package (E2E)', () => {
   let app: INestApplication
@@ -35,8 +35,11 @@ describe('Create Package (E2E)', () => {
       data: {
         name: 'Entregador 1',
         email: 'entregador@fast.com',
+        latitude: '84d84de5d4e5d4e54dcec',
+        longitude: 'dedececcd44ccececascc',
+        phone: '429XXXXXX45',
         password: '123456',
-        role: 'DELIVERED_DRIVER',
+        role: UserRole.DELIVERED_DRIVER,
       },
     })
     delivererId = user.id
@@ -61,7 +64,7 @@ describe('Create Package (E2E)', () => {
         name: 'John Doe',
         email: 'johndoe@example.com',
         password: '123456',
-        role: UserRoleEnum.RECIPIENT,
+        role: UserRole.DELIVERED_DRIVER
       })
 
     const userOnDatabase = await prisma.user.findFirst({

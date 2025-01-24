@@ -2,6 +2,7 @@ import { AppModule } from '@/app.module'
 import { PrismaService } from '@/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
+import { UserRole } from '@prisma/client'
 import { hash } from 'bcryptjs'
 import request from 'supertest'
 
@@ -24,7 +25,10 @@ describe('Authenticate (E2E)', () => {
         name: 'John Doe',
         email: 'joão@teste.com',
         password: await hash('123456', 8),
-        role: 'user',
+        latitude: 'sdsdasdsds71',
+        longitude: 'dedeadweded5',
+        role: UserRole.DELIVERED_DRIVER,
+        phone: '429XXXX567'
       },
     })
   })

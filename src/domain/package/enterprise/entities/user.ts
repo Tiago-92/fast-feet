@@ -1,12 +1,12 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { UserRoleEnum } from '@/domain/enums/user-role-enum'
+import { UserRole } from '@prisma/client'
 import { Entity } from 'src/core/entity'
 
 interface UserProps {
   name: string
   email: string
   password: string
-  role: UserRoleEnum
+  role: UserRole
 }
 
 export class User extends Entity<UserProps> {

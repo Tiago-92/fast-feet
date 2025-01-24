@@ -29,6 +29,9 @@ describe('Get All Packages (E2E)', () => {
         email: 'entregador@fast.com',
         password: '123456',
         role: 'DELIVERED_DRIVER',
+        latitude: '84d84de5d4e5d4e54dcec',
+        longitude: 'dedececcd44ccececascc',
+        phone: '429XXXXXX45',
       },
     })
     delivererId = deliverer.id
@@ -39,6 +42,9 @@ describe('Get All Packages (E2E)', () => {
         email: 'destinatario@fast.com',
         password: '123456',
         role: 'RECIPIENT',
+        latitude: '84d84de5d4e5d4e54dcec',
+        longitude: 'dedececcd44ccececascc',
+        phone: '429XXXXXX45',
       },
     })
     recipientId = recipient.id
@@ -50,6 +56,8 @@ describe('Get All Packages (E2E)', () => {
         status: PackageStatus.AWAITING_PICKUP,
         delivererId,
         recipientId,
+        latitude: '1edcsdcdscdscdscsdcsdc',
+        longitude: 'wsdascasd5e4c5d1c5saedc'
       },
     })
 
@@ -60,6 +68,8 @@ describe('Get All Packages (E2E)', () => {
         status: PackageStatus.RETURNED,
         delivererId,
         recipientId,
+        longitude: 'dscasdcsd84cdcd4sdcdc',
+        latitude: 'dsacadscdacascasxsax45'
       },
     })
   })

@@ -3,12 +3,13 @@ import { UserRepository } from '../package/application/repositories/user-reposit
 import { Either, right } from '@/core/either'
 import { User } from '../package/enterprise/entities/user'
 import { UserRoleEnum } from '../enums/user-role-enum'
+import { UserRole } from '@prisma/client'
 
 interface AccountUseCaseRequest {
   name: string
   email: string
   password: string
-  role: UserRoleEnum
+  role: UserRole
 }
 
 type AccountUseCaseResponse = Either<null, { account: User }>

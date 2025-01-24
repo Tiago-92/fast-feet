@@ -38,6 +38,9 @@ describe('Create Package (E2E)', () => {
         email: 'entregador@fast.com',
         password: '123456',
         role: 'DELIVERED_DRIVER',
+        latitude: '84d84de5d4e5d4e54dcec',
+        longitude: 'dedececcd44ccececascc',
+        phone: '429XXXXXX45',
       },
     })
     delivererId = deliverer.id
@@ -49,6 +52,9 @@ describe('Create Package (E2E)', () => {
         email: 'destinatario@fast.com',
         password: '123456',
         role: 'RECIPIENT',
+        latitude: '84d84de5d4e5d4e54dcec',
+        longitude: 'dedececcd44ccececascc',
+        phone: '429XXXXXX45',
       },
     })
     recipientId = recipient.id
@@ -67,6 +73,8 @@ describe('Create Package (E2E)', () => {
         status: 'DELIVERED',
         recipientId,
         delivererId,
+        latitude: 'csdcd55cd5c15dc',
+        longitude: 'ded8c4xz5c1e8x1w'
       })
 
     const packageOnDatabase = await prisma.package.findFirst({

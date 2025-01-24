@@ -27,6 +27,9 @@ describe('Delete Delivered Driver (E2E)', () => {
         email: 'entregador@fast.com',
         password: '123456',
         role: 'DELIVERED_DRIVER',
+        latitude: '84d84de5d4e5d4e54dcec',
+        longitude: 'dedececcd44ccececascc',
+        phone: '429XXXXXX45',
       },
     })
     delivererId = deliverer.id
