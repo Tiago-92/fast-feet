@@ -28,7 +28,7 @@ import { UpdatePackageController } from './controllers/update-package-controller
 import { UpdatePackeUseCase } from './domain/use-cases/update-package'
 import { GetStatusUseCase } from './domain/use-cases/get-package-status'
 import { GetStatusController } from './controllers/get-status-controller'
-import { UpdatePackageStatusController } from './controllers/update-pacakge-status-controller'
+import { UpdatePackageStatusController } from './controllers/update-package-status-controller'
 import { UpdatePackageStatusUseCase } from './domain/use-cases/update-package-status'
 
 @Module({

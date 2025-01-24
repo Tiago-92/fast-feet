@@ -3,39 +3,30 @@ import { InMemoryPackageRepository } from 'test/repositories/in-memory-package-r
 import { PackageStatus } from '@prisma/client'
 
 let inMemoryPackageRepository: InMemoryPackageRepository
-describe('Update Package', () => {
+describe('Update Package Status', () => {
   beforeEach(() => {
     inMemoryPackageRepository = new InMemoryPackageRepository()
   })
 
-  it('should be able to update a package', async () => {
+  it('should be able to update a package status', async () => {
     const packageContent = Package.create({
       title: 'Embalagem teste 1',
       content: 'Embalagem teste 1',
-      status: PackageStatus.RETURNED,
+      status: PackageStatus.AWAITING_PICKUP,
       delivererId: 'sded4c84w81x2c18cec8wxcd5',
       recipientId: '8fewc55wd1ce5wc1we51sd5c1',
     })
 
     await inMemoryPackageRepository.create(packageContent)
 
-    const updatedPackage = await inMemoryPackageRepository.update(
-      packageContent.id.toString(),
-      {
-        title: 'Embalagem teste 2 atualizada',
-        content: 'Embalagem teste 2 atualizaada',
-        status: PackageStatus.DELIVERED,
-        delivererId: 'sded4c84w81x2c18cec8wxcd5',
-        recipientId: '8fewc55wd1ce5wc1we51sd5c1',
-      },
-    )
+    const updatedPackageStatus = await inMemoryPackageRepository.updateStatus(packageContent.id.toString(), 'PICKUP')
 
     expect(inMemoryPackageRepository.items).toHaveLength(1)
-    expect(updatedPackage.getProps()).toEqual(
+    expect(updatedPackageStatus.getProps()).toEqual(
       expect.objectContaining({
-        title: 'Embalagem teste 2 atualizada',
-        content: 'Embalagem teste 2 atualizaada',
-        status: PackageStatus.DELIVERED,
+        title: 'Embalagem teste 1',
+        content: 'Embalagem teste 1',
+        status: PackageStatus.PICKUP,
         delivererId: 'sded4c84w81x2c18cec8wxcd5',
         recipientId: '8fewc55wd1ce5wc1we51sd5c1',
       }),
