@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common'
 import { DeliveredDriverRepository } from '@/domain/package/application/repositories/delivered-driver-repository'
 import { User } from '@/domain/package/enterprise/entities/user'
 import { PrismaUserMapper } from '../mappers/prisma-user-mapper'
-import { UserRoleEnum } from '@/domain/enums/user-role-enum'
+import { UserRole } from '@prisma/client'
 
 @Injectable()
 export class PrismaDeliveredDriverRepository
@@ -36,7 +36,9 @@ export class PrismaDeliveredDriverRepository
       name: string
       email: string
       password: string
-      role: UserRoleEnum.DELIVERED_DRIVER
+      role: UserRole
+      latitude: string
+      longitude: string
     },
   ): Promise<User | null> {
     const updatedUser = await this.prisma.user.update({

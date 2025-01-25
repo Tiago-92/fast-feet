@@ -64,7 +64,10 @@ describe('Create Package (E2E)', () => {
         name: 'John Doe',
         email: 'johndoe@example.com',
         password: '123456',
-        role: UserRole.DELIVERED_DRIVER
+        role: UserRole.DELIVERED_DRIVER,
+        latitude: '123.456',
+        longitude: '-78.123',
+        phone: '1234567890',
       })
 
     const userOnDatabase = await prisma.user.findFirst({

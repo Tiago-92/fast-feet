@@ -1,4 +1,3 @@
-import { UserRoleEnum } from '@/domain/enums/user-role-enum'
 import { UpdateDeliveredDriverUseCase } from '@/domain/use-cases/update-delivered-driver'
 import {
   Controller,
@@ -8,6 +7,7 @@ import {
   Param,
   Body,
 } from '@nestjs/common'
+import { UserRole } from '@prisma/client'
 
 @Injectable()
 @Controller('/delivered-driver/update/:id')
@@ -19,7 +19,15 @@ export class UpdateDeliveredDriverController {
   async handle(
     @Param('id') userId: string,
     @Body()
-    data: { name: string; email: string; password: string; role: UserRoleEnum },
+    data: {
+      name: string
+      email: string
+      password: string
+      role: UserRole
+      latitude: string
+      longitude: string
+      phone: string
+    },
   ) {
     const result = await this.deliveredDriver.execute(userId, data)
 

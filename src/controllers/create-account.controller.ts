@@ -18,6 +18,9 @@ const createAccountBodySchema = z.object({
   email: z.string(),
   password: z.string(),
   role: z.nativeEnum(UserRole),
+  latitude: z.string(),
+  longitude: z.string(),
+  phone: z.string(),
 })
 
 type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>
@@ -31,7 +34,7 @@ export class CreateAccountController {
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createAccountBodySchema))
   async handle(@Body() body: CreateAccountBodySchema) {
-    const { name, email, password, role } = body
+    const { name, email, password, role, latitude, longitude, phone } = body
 
     const hashedPassword = await hash(password, 8)
 
@@ -40,6 +43,9 @@ export class CreateAccountController {
       email,
       password: hashedPassword,
       role,
+      latitude,
+      longitude,
+      phone,
     })
 
     if (result.isLeft()) {

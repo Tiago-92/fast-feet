@@ -28,7 +28,7 @@ describe('Authenticate (E2E)', () => {
         latitude: 'sdsdasdsds71',
         longitude: 'dedeadweded5',
         role: UserRole.DELIVERED_DRIVER,
-        phone: '429XXXX567'
+        phone: '429XXXX567',
       },
     })
   })

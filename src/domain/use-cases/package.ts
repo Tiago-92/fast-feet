@@ -10,6 +10,8 @@ interface PackageUseCaseRequest {
   title: string
   content: string
   status: PackageStatus
+  latitude: string
+  longitude: string
 }
 
 type PackageUseCaseaseResponse = Either<
@@ -28,6 +30,8 @@ export class PackageUseCase {
     content,
     title,
     status,
+    latitude,
+    longitude,
   }: PackageUseCaseRequest): Promise<PackageUseCaseaseResponse> {
     const packageContent = Package.create({
       title,
@@ -35,6 +39,8 @@ export class PackageUseCase {
       status,
       delivererId,
       recipientId,
+      latitude,
+      longitude,
     })
 
     await this.packageRepository.create(packageContent)

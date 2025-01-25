@@ -1,7 +1,6 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { UserRoleEnum } from '@/domain/enums/user-role-enum'
 import { User } from '@/domain/package/enterprise/entities/user'
-import { Prisma, User as PrismaUser } from '@prisma/client'
+import { Prisma, User as PrismaUser, UserRole } from '@prisma/client'
 
 export class PrismaUserMapper {
   static toDomain(raw: PrismaUser): User {
@@ -10,7 +9,10 @@ export class PrismaUserMapper {
         name: raw.name,
         email: raw.email,
         password: raw.password,
-        role: raw.role as UserRoleEnum,
+        role: raw.role as UserRole,
+        latitude: raw.latitude,
+        longitude: raw.longitude,
+        phone: raw.phone,
       },
       new UniqueEntityID(raw.id),
     )
@@ -23,6 +25,9 @@ export class PrismaUserMapper {
       email: user.email,
       password: user.password,
       role: user.role,
+      latitude: user.latitue,
+      longitude: user.longitude,
+      phone: user.phone,
     }
   }
 }

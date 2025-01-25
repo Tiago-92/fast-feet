@@ -12,6 +12,8 @@ export class PrismaPackageMapper {
         content: raw.content,
         status: raw.status as PackageStatus,
         createdAt: raw.createdAt,
+        latitude: raw.latitude,
+        longitude: raw.longitude,
       },
       new UniqueEntityID(raw.id),
     )
@@ -26,6 +28,8 @@ export class PrismaPackageMapper {
       content: packageContent.content,
       status: packageContent.status,
       createdAt: packageContent.createdAt,
+      latitude: packageContent.latitude,
+      longitude: packageContent.longitude,
     }
   }
 

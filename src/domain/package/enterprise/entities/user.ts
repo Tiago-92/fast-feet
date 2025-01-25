@@ -7,6 +7,9 @@ interface UserProps {
   email: string
   password: string
   role: UserRole
+  latitude: string
+  longitude: string
+  phone: string
 }
 
 export class User extends Entity<UserProps> {
@@ -24,6 +27,18 @@ export class User extends Entity<UserProps> {
 
   get role() {
     return this.props.role
+  }
+
+  get latitue() {
+    return this.props.latitude
+  }
+
+  get longitude() {
+    return this.props.longitude
+  }
+
+  get phone() {
+    return this.props.phone
   }
 
   public getProps() {

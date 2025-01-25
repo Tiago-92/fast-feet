@@ -19,6 +19,8 @@ const createPackageBodySchema = z.object({
   status: z.nativeEnum(PackageStatus),
   delivererId: z.string(),
   recipientId: z.string(),
+  latitude: z.string(),
+  longitude: z.string(),
 })
 
 type CreatePackageBodySchema = z.infer<typeof createPackageBodySchema>
@@ -56,8 +58,15 @@ export class CreatePackageController {
   @ApiOperation({ summary: 'Create a new user' })
   /* @ApiBody({ type: CreatePackageDto }) */
   async handle(@Body() body: CreatePackageBodySchema) {
-    const { title, content, status, delivererId, recipientId } =
-      createPackageBodySchema.parse(body)
+    const {
+      title,
+      content,
+      status,
+      delivererId,
+      recipientId,
+      latitude,
+      longitude,
+    } = createPackageBodySchema.parse(body)
 
     const result = await this.createPackage.execute({
       title,
@@ -65,6 +74,8 @@ export class CreatePackageController {
       status,
       delivererId,
       recipientId,
+      latitude,
+      longitude,
     })
 
     if (result.isLeft()) {

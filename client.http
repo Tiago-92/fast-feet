@@ -9,7 +9,10 @@ Content-Type: application/json
   "name": "Jose Santos",
   "email": "jose@teste.com",
   "password": "123545",
-  "role": "delivered_driver"
+  "role": "DELIVERED_DRIVER",
+  "latitude": "fdrfdcd8545dc1",
+  "longitude": "sdsdsxcsxcsxw",
+  "phone": "42XXXXXX85"
 }
 
 ### @name authenticate

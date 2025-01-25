@@ -10,6 +10,8 @@ interface PackageProps {
   createdAt: Date
   recipientId: string | UniqueEntityID
   delivererId: string | UniqueEntityID
+  latitude: string
+  longitude: string
 }
 
 export class Package extends Entity<PackageProps> {
@@ -35,6 +37,14 @@ export class Package extends Entity<PackageProps> {
 
   get delivererId() {
     return this.props.delivererId
+  }
+
+  get latitude() {
+    return this.props.latitude
+  }
+
+  get longitude() {
+    return this.props.latitude
   }
 
   set content(content: string) {
