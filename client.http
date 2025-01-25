@@ -6,10 +6,10 @@ POST {{baseUrl}}/accounts
 Content-Type: application/json
 
 {
-  "name": "Jose Santos",
-  "email": "jose@teste.com",
+  "name": "Tiago Amaral",
+  "email": "tiago@teste.com",
   "password": "123545",
-  "role": "DELIVERED_DRIVER",
+  "role": "RECIPIENT",
   "latitude": "fdrfdcd8545dc1",
   "longitude": "sdsdsxcsxcsxw",
   "phone": "42XXXXXX85"
@@ -36,7 +36,9 @@ Authorization: Bearer {{authToken}}
   "content": "Contéudo exemplo",
   "status": "delivered",
   "recipientId": "efe981a3-7ff2-45fe-ba29-2b1b790e252c",
-  "delivererId": "10512ca7-94c4-4786-ac4c-480d0326b1ad"
+  "delivererId": "10512ca7-94c4-4786-ac4c-480d0326b1ad",
+  "latitude": "wdedcadc5dc4d5cdcdcdscdc",
+  "longitude": "dsasdasdsadasdasdsdsadas"
 }
 
 ###
