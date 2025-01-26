@@ -51,4 +51,22 @@ export class PrismaDeliveredDriverRepository
     }
     return PrismaUserMapper.toDomain(updatedUser)
   }
+
+  async getDelivererLocation(
+    delivererId: string,
+  ): Promise<{ latitude: number; longitude: number } | null> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: delivererId },
+      select: { latitude: true, longitude: true },
+    })
+
+    if (!user || !user.latitude || !user.longitude) {
+      return null
+    }
+
+    return {
+      latitude: parseFloat(user.latitude),
+      longitude: parseFloat(user.longitude),
+    }
+  }
 }

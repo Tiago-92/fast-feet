@@ -30,6 +30,8 @@ import { GetStatusUseCase } from './domain/use-cases/get-package-status'
 import { GetStatusController } from './controllers/get-status-controller'
 import { UpdatePackageStatusController } from './controllers/update-package-status-controller'
 import { UpdatePackageStatusUseCase } from './domain/use-cases/update-package-status'
+import { ListDeliveryAddressForDeliveredDriverUseCase } from './domain/use-cases/list-delivery-adress-for-delivered-driver'
+import { ListDeliveryAddressForDeliveredDriverController } from './controllers/list-delivery-adress-for-delivered-driver-controller'
 
 @Module({
   imports: [
@@ -51,6 +53,7 @@ import { UpdatePackageStatusUseCase } from './domain/use-cases/update-package-st
     UpdatePackageController,
     GetStatusController,
     UpdatePackageStatusController,
+    ListDeliveryAddressForDeliveredDriverController,
   ],
   providers: [
     PrismaService,
@@ -64,6 +67,7 @@ import { UpdatePackageStatusUseCase } from './domain/use-cases/update-package-st
     UpdatePackeUseCase,
     GetStatusUseCase,
     UpdatePackageStatusUseCase,
+    ListDeliveryAddressForDeliveredDriverUseCase,
     {
       provide: PackageRepository,
       useClass: PrismaPackageRepository,
