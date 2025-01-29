@@ -15,6 +15,8 @@ describe('Update Package Status', () => {
       status: PackageStatus.AWAITING_PICKUP,
       delivererId: 'sded4c84w81x2c18cec8wxcd5',
       recipientId: '8fewc55wd1ce5wc1we51sd5c1',
+      latitude: '8455266655',
+      longitude: '-8851516635',
     })
 
     await inMemoryPackageRepository.create(packageContent)

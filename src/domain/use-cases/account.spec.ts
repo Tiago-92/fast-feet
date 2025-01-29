@@ -1,6 +1,6 @@
 import { InMemoryAccountRepository } from 'test/repositories/in-memory-account-repository'
 import { AccountUseCase } from './account'
-import { UserRoleEnum } from '../enums/user-role-enum'
+import { UserRole } from '@prisma/client'
 
 let inMemoryAccountRepository: InMemoryAccountRepository
 let sut: AccountUseCase
@@ -16,7 +16,7 @@ describe('Register User', () => {
       name: 'Jonh Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      role: UserRoleEnum.RECIPIENT,
+      role: UserRole.RECIPIENT,
     })
 
     expect(result.isRight()).toBe(true)

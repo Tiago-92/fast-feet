@@ -1,6 +1,7 @@
 import { InMemoryDeliveredDriverRepository } from 'test/repositories/in-memory-delivered-driver-repository'
 import { User } from '@/domain/package/enterprise/entities/user'
 import { UserRoleEnum } from '@/domain/enums/user-role-enum'
+import { UserRole } from '@prisma/client'
 
 let inMemoryDeliveredDriverRepository: InMemoryDeliveredDriverRepository
 
@@ -14,7 +15,10 @@ describe('Update Delivered Driver', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      role: UserRoleEnum.DELIVERED_DRIVER,
+      role: UserRole.DELIVERED_DRIVER,
+      latitude: '99787566654',
+      longitude: '-88784545662',
+      phone: '42XXXXXXX85'
     })
 
     await inMemoryDeliveredDriverRepository.create(user)

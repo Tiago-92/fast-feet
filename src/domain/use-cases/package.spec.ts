@@ -1,7 +1,7 @@
 /* import { PackageUseCase } from './package' */
 import { InMemoryPackageRepository } from 'test/repositories/in-memory-package-repositoy'
 import { PackageUseCase } from './package'
-import { PackageStatusEnum } from '../enums/package-status-enum'
+import { PackageStatus } from '@prisma/client'
 
 let inMemoryPackageRepository: InMemoryPackageRepository
 let sut: PackageUseCase
@@ -17,9 +17,11 @@ describe('Create package', () => {
     const result = await sut.execute({
       title: 'teste pacote',
       content: 'teste pacote',
-      status: PackageStatusEnum.PICKUP,
+      status: PackageStatus.PICKUP,
       delivererId: 'cdcefdc215ec4dvcr5vrw81ca',
       recipientId: 'de54c5ve41wudhuwefw5f4wcece',
+      latitude: '1257633335744',
+      longitude: '-665481558566'
     })
 
     expect(result.isRight()).toBe(true)
