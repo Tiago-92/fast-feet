@@ -32,7 +32,7 @@ import { UpdatePackageStatusController } from './controllers/update-package-stat
 import { UpdatePackageStatusUseCase } from './domain/use-cases/update-package-status'
 import { ListDeliveryAddressForDeliveredDriverUseCase } from './domain/use-cases/list-delivery-adress-for-delivered-driver'
 import { ListDeliveryAddressForDeliveredDriverController } from './controllers/list-delivery-adress-for-delivered-driver-controller'
-import { UpdateUserPasswordController } from './controllers/update-user-password'
+import { UpdateUserPasswordController } from './controllers/update-user-password-controller.ts'
 import { UpdateUserPasswordUseCase } from './domain/use-cases/update-user-password'
 
 @Module({
