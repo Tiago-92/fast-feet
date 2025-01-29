@@ -14,7 +14,9 @@ describe('Update Package', () => {
       content: 'Embalagem teste 1',
       status: PackageStatus.RETURNED,
       delivererId: 'sded4c84w81x2c18cec8wxcd5',
-      recipientId: '8fewc55wd1ce5wc1we51sd5c1',
+      recipientId: '8fewc5wd1ce5wc1we51sd5c1',
+      latitude: '887455664451',
+      longitude: '-884545615575'
     })
 
     await inMemoryPackageRepository.create(packageContent)
