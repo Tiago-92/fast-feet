@@ -3,6 +3,8 @@ import { User } from '@/domain/package/enterprise/entities/user'
 import { PrismaService } from '@/prisma/prisma.service'
 import { Injectable } from '@nestjs/common'
 import { PrismaUserMapper } from '../mappers/prisma-user-mapper'
+import { Package } from '@/domain/package/enterprise/entities/package'
+import { PrismaPackageMapper } from '../mappers/prisma-package-mapper'
 
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
@@ -37,5 +39,13 @@ export class PrismaUserRepository implements UserRepository {
     })
 
     return PrismaUserMapper.toDomain(updatedPassword)
+  }
+
+  async getPackagesByUserId(recipientId: string): Promise<Package[]> {
+    const packageContent = await this.prisma.package.findMany({
+      where: { recipientId },
+    }) 
+
+    return packageContent.map(PrismaPackageMapper.toDomain)
   }
 }
