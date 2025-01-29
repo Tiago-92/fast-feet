@@ -14,13 +14,13 @@
 Requisitos: Docker, Docker Compose, Node.js, pnpm
 
 ```bash
-# Baixar as dependêcias do Node.js
+# Baixar as dependências do Node.js
 pnpm install
 
 # Executar as migrations do Prisma
 npx prisma migrate dev
 
-# Iniciar o container docker do PostegreSQL 16 e inicia o projeto Nest.js  
+# Iniciar o container docker do PostegreSQL, Redis e RabbitMQ e iniciar o projeto Nest.js  
 sh dev start
 
 # Executar os testes unitários
