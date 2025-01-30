@@ -43,7 +43,7 @@ pnpm run test:e2e
 - [x] Deve ser possível marcar uma encomenda como devolvida
 - [x] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
 - [x] Deve ser possível alterar a senha de um usuário
-- [ ] Deve ser possível listar as entregas de um usuário
+- [x] Deve ser possível listar as entregas de um usuário
 - [ ] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
 
 ## Regras de negócio
