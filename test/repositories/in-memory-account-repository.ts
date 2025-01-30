@@ -1,9 +1,12 @@
 import { User } from '@/domain/package/enterprise/entities/user'
 import { UserRepository } from '@/domain/package/application/repositories/user-repository'
 import { hash } from 'bcryptjs'
+import { Package } from '@/domain/package/enterprise/entities/package'
 
 export class InMemoryAccountRepository implements UserRepository {
   public items: User[] = []
+
+  public packages: Package[] = []
 
   async create(user: User) {
     this.items.push(user)
@@ -36,5 +39,9 @@ export class InMemoryAccountRepository implements UserRepository {
     this.items[userIndex] = updatedPackage
 
     return updatedPackage
+  }
+
+  getPackagesByUserId(recipientId: string): Promise<Package[]> {
+    return Promise.resolve(this.packages.filter((pkg) => pkg.recipientId.toString() === recipientId))
   }
 }
