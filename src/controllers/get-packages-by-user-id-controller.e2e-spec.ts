@@ -9,7 +9,6 @@ describe('Fetch all packages by User ID (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let recipientId: string
-  let recipientId2: string
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -22,14 +21,14 @@ describe('Fetch all packages by User ID (E2E)', () => {
     await app.init()
 
     const recipient = await prisma.user.create({
-      data: { 
-        name: 'Recipient Test', 
+      data: {
+        name: 'Recipient Test',
         email: 'recipient@example.com',
         password: 'testpassword',
         role: UserRole.RECIPIENT,
         latitude: '0.0000',
         longitude: '0.0000',
-        phone: '1234567890', 
+        phone: '1234567890',
       },
     })
     recipientId = recipient.id
@@ -42,12 +41,10 @@ describe('Fetch all packages by User ID (E2E)', () => {
         password: 'testpassword',
         role: UserRole.DELIVERED_DRIVER,
         latitude: '0.000000',
-        longitude: '0.000000', 
+        longitude: '0.000000',
         phone: '1234567890',
       },
     })
-
-    await prisma.package.deleteMany({ where: { recipientId } })
 
     await prisma.package.createMany({
       data: [
@@ -83,23 +80,30 @@ describe('Fetch all packages by User ID (E2E)', () => {
 
   test('[GET] /packages/user/:id', async () => {
     const response = await request(app.getHttpServer()).get(
-      `/packages/user/:id/${recipientId}`,
+      `/packages/user/${recipientId}`,
     )
 
-    /* expect(response.status).toBe(200) */
-    expect(response.body).toHaveLength(2)
-
-    expect(response.body).toEqual(
+    expect(response.status).toBe(200)
+    expect(response.body.value.packageContent).toHaveLength(2)
+    expect(response.body.value.packageContent).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          title: 'Embalagem Teste',
-          status: PackageStatus.AWAITING_PICKUP,
-          recipientId,
+          props: expect.objectContaining({
+            title: 'Embalagem Teste',
+            status: 'AWAITING_PICKUP',
+            recipientId: expect.objectContaining({
+              value: recipientId,
+            }),
+          }),
         }),
         expect.objectContaining({
-          title: 'Embalagem Teste 2',
-          status: PackageStatus.AWAITING_PICKUP,
-          recipientId,
+          props: expect.objectContaining({
+            title: 'Embalagem Teste 2',
+            status: 'AWAITING_PICKUP',
+            recipientId: expect.objectContaining({
+              value: recipientId,
+            }),
+          }),
         }),
       ]),
     )

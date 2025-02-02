@@ -79,6 +79,8 @@ export class InMemoryPackageRepository implements PackageRepository {
         recipientId: currentPackage.recipientId,
         delivererId: currentPackage.delivererId,
         createdAt: currentPackage.createdAt,
+        latitude: currentPackage.latitude,
+        longitude: currentPackage.longitude,
       },
       currentPackage.id,
     )

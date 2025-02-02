@@ -21,14 +21,15 @@ export class GetPackagesByUserIdUseCase {
   async execute({
     recipientId,
   }: GetPackagesByUserIdUseCaseRequest): Promise<GetPackagesByUserIdUseCaseResponse> {
-    const packageContent = await this.userRepository.getPackagesByUserId(recipientId)
+    const packageContent =
+      await this.userRepository.getPackagesByUserId(recipientId)
 
     if (!recipientId) {
       throw new Error('Usuário não encontrado.')
     }
 
     return right({
-        packageContent,
+      packageContent,
     })
   }
 }

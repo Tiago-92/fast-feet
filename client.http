@@ -6,13 +6,13 @@ POST {{baseUrl}}/accounts
 Content-Type: application/json
 
 {
-  "name": "Tiago Amaral",
-  "email": "tiago@teste.com",
+  "name": "Manoel Almeida",
+  "email": "manoel@teste.com",
   "password": "123545",
   "role": "RECIPIENT",
-  "latitude": "fdrfdcd8545dc1",
-  "longitude": "sdsdsxcsxcsxw",
-  "phone": "42XXXXXX85"
+  "latitude": "5484845121584",
+  "longitude": "-32158484841",
+  "phone": "11XXXXXX51"
 }
 
 ### @name authenticate
@@ -35,10 +35,10 @@ Authorization: Bearer {{authToken}}
   "title": "Pacote 04 Exemplo",
   "content": "Contéudo exemplo",
   "status": "delivered",
-  "recipientId": "efe981a3-7ff2-45fe-ba29-2b1b790e252c",
-  "delivererId": "10512ca7-94c4-4786-ac4c-480d0326b1ad",
-  "latitude": "wdedcadc5dc4d5cdcdcdscdc",
-  "longitude": "dsasdasdsadasdasdsdsadas"
+  "recipientId": "bda0f0d5-3ee5-424e-8dd9-f5ed48efa4ed",
+  "delivererId": "2af0fcf2-1084-47dc-b3f4-6ec9235f71ec",
+  "latitude": "548841515154862",
+  "longitude": "-88745151521563"
 }
 
 ###

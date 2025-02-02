@@ -8,7 +8,7 @@ export class GetPackageByUserIdController {
 
   @Get()
   @HttpCode(200)
-  async handle(@Param('id') recipientId : string) {
+  async handle(@Param('id') recipientId: string) {
     const packages = await this.getPackageUseCase.execute({ recipientId })
 
     return packages
