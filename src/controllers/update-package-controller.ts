@@ -1,5 +1,5 @@
-import { PackageStatusEnum } from '@/domain/enums/package-status-enum'
 import { UpdatePackeUseCase } from '@/domain/use-cases/update-package'
+import { NotifyRecipientUseCase, NotificationResponse } from '@/domain/use-cases/notify-recipeint' 
 import {
   Controller,
   Put,
@@ -13,12 +13,15 @@ import { PackageStatus } from '@prisma/client'
 @Injectable()
 @Controller('/package/update/:id')
 export class UpdatePackageController {
-  constructor(private updatePackageUseCase: UpdatePackeUseCase) {}
+  constructor(
+    private updatePackageUseCase: UpdatePackeUseCase,
+    private notifyRecipientUseCase: NotifyRecipientUseCase
+  ) {}
 
   @Put()
   @HttpCode(200)
   async handle(
-    @Param('id') userId: string,
+    @Param('id') packageId: string,
     @Body()
     data: {
       title: string
@@ -28,8 +31,24 @@ export class UpdatePackageController {
       recipientId: string
     },
   ) {
-    const result = await this.updatePackageUseCase.execute(userId, data)
 
-    return result
+    const updatedPackage = await this.updatePackageUseCase.execute(packageId, data)
+
+    let notificationMessage: string | null = null
+
+    if (data.status) {
+      const notificationResponse: NotificationResponse = await this.notifyRecipientUseCase.execute({
+        recipientId: data.recipientId,
+        status: data.status,
+      })
+
+      notificationMessage = notificationResponse.message
+    }
+
+    return {
+      message: 'Status atualizado e notificação enviada!',
+      data: updatedPackage,
+      notification: notificationMessage,
+    }
   }
 }

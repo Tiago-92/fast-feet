@@ -36,6 +36,7 @@ import { UpdateUserPasswordController } from './controllers/update-user-password
 import { UpdateUserPasswordUseCase } from './domain/use-cases/update-user-password'
 import { GetPackageByUserIdController } from './controllers/get-packages-by-user-id'
 import { GetPackagesByUserIdUseCase } from './domain/use-cases/get-packages-by-user-id'
+import { NotifyRecipientUseCase } from './domain/use-cases/notify-recipeint'
 
 @Module({
   imports: [
@@ -76,6 +77,7 @@ import { GetPackagesByUserIdUseCase } from './domain/use-cases/get-packages-by-u
     ListDeliveryAddressForDeliveredDriverUseCase,
     UpdateUserPasswordUseCase,
     GetPackagesByUserIdUseCase,
+    NotifyRecipientUseCase,
     {
       provide: PackageRepository,
       useClass: PrismaPackageRepository,
