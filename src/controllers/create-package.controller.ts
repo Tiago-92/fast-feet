@@ -1,4 +1,6 @@
 import { PackageUseCase } from '@/domain/use-cases/package'
+import { Roles } from '@/infra/decorators/roles.decorator'
+import { RolesGuard } from '@/infra/guards/roles.guard'
 import {
   Controller,
   Post,
@@ -27,13 +29,14 @@ type CreatePackageBodySchema = z.infer<typeof createPackageBodySchema>
 
 @Injectable()
 @Controller('/packages')
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class CreatePackageController {
   constructor(private createPackage: PackageUseCase) {}
 
   @Post()
   @HttpCode(201)
-  @ApiOperation({ summary: 'Create a new user' })
+  @ApiOperation({ summary: 'Create a new package' })
+  @Roles('DELIVERED_DRIVER')
   async handle(@Body() body: CreatePackageBodySchema) {
     const {
       title,

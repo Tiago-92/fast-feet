@@ -1,6 +1,11 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common'
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+} from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
-import { UserRole } from '@prisma/client'
+import { ROLES_KEY } from '../decorators/roles.decorator'
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -8,13 +13,23 @@ export class RolesGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const requiredRoles = this.reflector.get<string[]>(
-      UserRole,
+      ROLES_KEY,
       context.getHandler(),
     )
+
     if (!requiredRoles) {
       return true
     }
-    const { user } = context.switchToHttp().getRequest()
-    return requiredRoles.some((role) => user.roles?.includes(role))
+
+    const request = context.switchToHttp().getRequest()
+    const user = request.user
+
+    if (!user || !user.roles) {
+      throw new ForbiddenException(
+        'Você não tem permissão para acessar este recurso',
+      )
+    }
+
+    return requiredRoles.some((roles) => user.roles?.includes(roles))
   }
 }

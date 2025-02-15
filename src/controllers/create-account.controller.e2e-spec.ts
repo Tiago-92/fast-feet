@@ -44,7 +44,10 @@ describe('Create Package (E2E)', () => {
     })
     delivererId = user.id
 
-    token = jwtService.sign({ sub: delivererId })
+    token = jwtService.sign({
+      sub: delivererId,
+      role: UserRole.DELIVERED_DRIVER,
+    })
   })
 
   afterAll(async () => {
