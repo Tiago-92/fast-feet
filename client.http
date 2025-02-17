@@ -6,12 +6,12 @@ POST {{baseUrl}}/accounts
 Content-Type: application/json
 
 {
-  "name": "Manoel Almeida",
-  "email": "manoel@teste.com",
+  "name": "Diego Fernandes",
+  "email": "diegol@teste.com",
   "password": "123545",
-  "role": "RECIPIENT",
-  "latitude": "5484845121584",
-  "longitude": "-32158484841",
+  "role": "DELIVERED_DRIVER",
+  "latitude": "854512121575",
+  "longitude": "-84545486624",
   "phone": "11XXXXXX51"
 }
 

@@ -7,7 +7,7 @@ import { z } from 'zod'
 
 const tokenSchema = z.object({
   sub: z.string().uuid(),
-  role: z.array(z.string()),
+  roles: z.array(z.string()),
 })
 
 type TokenSchema = z.infer<typeof tokenSchema>
@@ -25,6 +25,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: TokenSchema) {
-    return { ...payload, role: payload.role }
+    return {
+      sub: payload.sub,
+      roles: Array.isArray(payload.roles) ? payload.roles : [payload.roles],
+    }
   }
 }

@@ -3,7 +3,7 @@ import { Entity } from 'src/core/entity'
 import { Optional } from '@/core/types'
 import { PackageStatus } from '@prisma/client'
 
-interface PackageProps {
+export interface PackageProps {
   title: string
   content: string
   status: PackageStatus

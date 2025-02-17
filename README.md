@@ -48,7 +48,7 @@ pnpm run test:e2e
 
 ## Regras de negócio
 
-- [ ] Somente usuário do tipo admin pode realizar operações de CRUD nas encomendas
+- [x] Somente usuário do tipo admin pode realizar operações de CRUD nas encomendas
 - [ ] Somente usuário do tipo admin pode realizar operações de CRUD dos entregadores
 - [ ] Somente usuário do tipo admin pode realizar operações de CRUD dos destinatários
 - [ ] Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
