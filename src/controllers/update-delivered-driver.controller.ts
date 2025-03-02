@@ -1,4 +1,6 @@
 import { UpdateDeliveredDriverUseCase } from '@/domain/use-cases/update-delivered-driver'
+import { Roles } from '@/infra/decorators/roles.decorator'
+import { RolesGuard } from '@/infra/guards/roles.guard'
 import {
   Controller,
   Put,
@@ -6,15 +8,19 @@ import {
   Injectable,
   Param,
   Body,
+  UseGuards,
 } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
 import { UserRole } from '@prisma/client'
 
 @Injectable()
+@UseGuards(AuthGuard('jwt'), RolesGuard)
 @Controller('/delivered-driver/update/:id')
 export class UpdateDeliveredDriverController {
   constructor(private deliveredDriver: UpdateDeliveredDriverUseCase) {}
 
   @Put()
+  @Roles('DELIVERED_DRIVER')
   @HttpCode(200)
   async handle(
     @Param('id') userId: string,

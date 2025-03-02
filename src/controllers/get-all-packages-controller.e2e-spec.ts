@@ -57,7 +57,7 @@ describe('Get All Packages (E2E)', () => {
         delivererId,
         recipientId,
         latitude: '1edcsdcdscdscdscsdcsdc',
-        longitude: 'wsdascasd5e4c5d1c5saedc'
+        longitude: 'wsdascasd5e4c5d1c5saedc',
       },
     })
 
@@ -69,7 +69,7 @@ describe('Get All Packages (E2E)', () => {
         delivererId,
         recipientId,
         longitude: 'dscasdcsd84cdcd4sdcdc',
-        latitude: 'dsacadscdacascasxsax45'
+        latitude: 'dsacadscdacascasxsax45',
       },
     })
   })

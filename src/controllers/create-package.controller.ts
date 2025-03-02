@@ -28,15 +28,15 @@ const createPackageBodySchema = z.object({
 type CreatePackageBodySchema = z.infer<typeof createPackageBodySchema>
 
 @Injectable()
-@Controller('/packages')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
+@Controller('/packages')
 export class CreatePackageController {
   constructor(private createPackage: PackageUseCase) {}
 
   @Post()
   @HttpCode(201)
-  @ApiOperation({ summary: 'Create a new package' })
   @Roles('DELIVERED_DRIVER')
+  @ApiOperation({ summary: 'Create a new package' })
   async handle(@Body() body: CreatePackageBodySchema) {
     const {
       title,
