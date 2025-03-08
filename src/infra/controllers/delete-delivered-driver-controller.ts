@@ -23,7 +23,7 @@ export class DeliveredDriverController {
   ) {}
 
   @Delete()
-  @HttpCode(204)
+  @HttpCode(200)
   @Roles('DELIVERED_DRIVER')
   async handle(@Param('id') id: string) {
     const user = await this.prisma.user.findUnique({ where: { id } })

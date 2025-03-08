@@ -60,9 +60,11 @@ describe('Get Packages By User ID Use Case', () => {
     const result = await sut.execute({ recipientId })
 
     if (result.isRight()) {
-        expect(result.value.packageContent).toHaveLength(2)
-        expect(result.value.packageContent).toEqual(expect.arrayContaining([package1, package2]))
-        expect(result.value.packageContent).not.toContain(package3)
+      expect(result.value.packageContent).toHaveLength(2)
+      expect(result.value.packageContent).toEqual(
+        expect.arrayContaining([package1, package2]),
+      )
+      expect(result.value.packageContent).not.toContain(package3)
     }
   })
 })

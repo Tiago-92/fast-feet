@@ -2,7 +2,7 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 import { UserRole } from '@prisma/client'
 import { Entity } from 'src/core/entity'
 
-interface UserProps {
+export interface UserProps {
   name: string
   email: string
   password: string
