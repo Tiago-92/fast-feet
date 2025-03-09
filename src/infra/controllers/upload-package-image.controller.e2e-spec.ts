@@ -2,33 +2,42 @@ import { AppModule } from '@/app.module'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
-import { DeliveredDriverFactory } from 'test/factories/user-factory'
-import { JwtService } from '@nestjs/jwt'
+import { UserFactory } from 'test/factories/user-factory'
 import { PrismaService } from '@/prisma/prisma.service'
+import { hash } from 'bcryptjs'
 
 describe('Upload Package Image', () => {
   let app: INestApplication
-  let deliveredDriverFactory: DeliveredDriverFactory
-  let jwt: JwtService
+  let userFactory: UserFactory
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
-      providers: [PrismaService, DeliveredDriverFactory],
+      providers: [PrismaService, UserFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
-
-    deliveredDriverFactory = moduleRef.get(DeliveredDriverFactory)
-    jwt = moduleRef.get(JwtService)
+    userFactory = moduleRef.get(UserFactory)
 
     await app.init()
   })
 
   test('[POST] /package/image', async () => {
-    const user = await deliveredDriverFactory.makePrismaDeliveredDriver()
+    const hashedPassword = await hash('123545', 10)
 
-    const accessToken = jwt.sign({ sub: user.id.toString() })
+    await userFactory.makePrismaUser({
+      email: 'jose@teste.com',
+      password: hashedPassword,
+    })
+
+    const authResponse = await request(app.getHttpServer())
+      .post('/sessions')
+      .send({
+        email: 'jose@teste.com',
+        password: '123545',
+      })
+
+    const accessToken = authResponse.body.access_token
 
     const response = await request(app.getHttpServer())
       .post('/package/image')

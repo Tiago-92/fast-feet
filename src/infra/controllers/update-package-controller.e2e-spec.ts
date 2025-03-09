@@ -5,26 +5,34 @@ import { PrismaService } from '@/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import { PackageStatus } from '@prisma/client'
+import { hash } from 'bcryptjs'
 import request from 'supertest'
+import { MakePackage, PackageFactory } from 'test/factories/package-factory'
+import { UserFactory } from 'test/factories/user-factory'
 
 describe('Update Delivred Driver (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let packageId: string
-  let delivererId: string
-  let recipientId: string
+  let userFactory: UserFactory
+  let packageFactory: PackageFactory
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
+      providers: [UserFactory, PackageFactory, PrismaService, MakePackage],
     }).compile()
 
     app = moduleRef.createNestApplication()
     prisma = moduleRef.get(PrismaService)
+    userFactory = moduleRef.get(UserFactory)
+    packageFactory = moduleRef.get(PackageFactory)
 
     await app.init()
 
-    const deliverer = await prisma.user.create({
+    await prisma.package.deleteMany()
+
+    /* const deliverer = await prisma.user.create({
       data: {
         name: 'Entregador 1',
         email: 'entregador@fast.com',
@@ -58,24 +66,47 @@ describe('Update Delivred Driver (E2E)', () => {
         delivererId,
         recipientId,
         latitude: 'dsdasdsdasdx8dc',
-        longitude: 'defec518412scae7'
+        longitude: 'defec518412scae7',
       },
     })
-    packageId = packageContent.id
+    packageId = packageContent.id */
   })
 
   test('[PUT] /package/update/:id', async () => {
+    const hashedPassword = await hash('123545', 10)
+
+    await userFactory.makePrismaUser({
+      email: 'jose@teste.com',
+      password: hashedPassword,
+    })
+
+    const authResponse = await request(app.getHttpServer())
+      .post('/sessions')
+      .send({
+        email: 'jose@teste.com',
+        password: '123545',
+      })
+
+    const accessToken = authResponse.body.access_token
+
+    const packageContent = await packageFactory.makePrismaPackage({
+      title: 'Pacote 01',
+      content: 'Pacote 1',
+    })
+    packageId = packageContent.id.toString()
+
     const response = await request(app.getHttpServer())
       .put(`/package/update/${packageId}`)
       .send({
-        title: 'Embalagem teste 1 atualizada',
-        content: 'Embalagem teste 1 atualizada',
+        title: 'Pacote 01 atualizado',
+        content: 'Pacote 01 atualizado',
       })
+      .set('Authorization', `Bearer ${accessToken}`)
 
     const packageUpdated = await prisma.package.findFirst({
       where: {
-        title: 'Embalagem teste 1 atualizada',
-        content: 'Embalagem teste 1 atualizada',
+        title: 'Pacote 01 atualizado',
+        content: 'Pacote 01 atualizado',
       },
     })
 
@@ -83,13 +114,27 @@ describe('Update Delivred Driver (E2E)', () => {
     expect(packageUpdated).toBeTruthy()
     expect(response.body).toEqual(
       expect.objectContaining({
-        _id: expect.objectContaining({
-          value: expect.any(String),
+        data: expect.objectContaining({
+          _id: expect.objectContaining({
+            value: expect.any(String),
+          }),
+          props: expect.objectContaining({
+            title: 'Pacote 01 atualizado',
+            content: 'Pacote 01 atualizado',
+            createdAt: expect.any(String),
+            delivererId: expect.objectContaining({
+              value: expect.any(String),
+            }),
+            recipientId: expect.objectContaining({
+              value: expect.any(String),
+            }),
+            latitude: expect.any(String),
+            longitude: expect.any(String),
+            status: 'DELIVERED',
+          }),
         }),
-        props: expect.objectContaining({
-          title: 'Embalagem teste 1 atualizada',
-          content: 'Embalagem teste 1 atualizada',
-        }),
+        message: 'Status atualizado e notificação enviada!',
+        notification: null,
       }),
     )
   })
