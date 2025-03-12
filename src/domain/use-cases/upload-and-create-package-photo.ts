@@ -4,10 +4,12 @@ import { InvalidAttachmentType } from './errors/invalid-image-type'
 import { Uploader } from '../package/application/storage/uploader'
 import { PackagePhoto } from '../package/enterprise/entities/package-photo'
 import { PackagePhotoRepository } from '../package/application/repositories/package-photo-repository'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 interface UploadAndCreatePackagePhotoUseCaseRequest {
   fileName: string
   fileType: string
+  packageId: string | UniqueEntityID
   body: Buffer
 }
 
@@ -28,6 +30,7 @@ export class UploadAndCreatePackagePhotoUseCase {
   async execute({
     fileName,
     fileType,
+    packageId,
     body,
   }: UploadAndCreatePackagePhotoUseCaseRequest): Promise<UploadAndCreatePackagePhotoUseCaseResponse> {
     if (!/^(image\/(jpeg|jpg|png))$/.test(fileType)) {
@@ -43,6 +46,7 @@ export class UploadAndCreatePackagePhotoUseCase {
     const packagePhoto = PackagePhoto.create({
       title: fileName,
       url,
+      packageId,
     })
 
     await this.packagePhotoRepository.create(packagePhoto)

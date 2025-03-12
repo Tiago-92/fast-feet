@@ -25,6 +25,7 @@ describe('Upload and create package image', () => {
       fileName: 'profile.png',
       fileType: 'image/png',
       body: Buffer.from(''),
+      packageId: '84545dc4dxsx',
     })
 
     expect(result.isRight()).toBe(true)
@@ -46,6 +47,7 @@ describe('Upload and create package image', () => {
       fileName: 'profile.mp3',
       fileType: 'audio/mpeg',
       body: Buffer.from(''),
+      packageId: '8c4d8c48c4x5sx4s5x',
     })
 
     expect(result.isLeft()).toBe(true)

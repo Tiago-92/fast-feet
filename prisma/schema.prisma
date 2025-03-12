@@ -35,19 +35,30 @@ model User {
 }
 
 model Package {
-  id          String    @id @default(uuid())
+  id          String        @id @default(uuid())
   title       String
   content     String
   status      PackageStatus
   latitude    String
   longitude   String
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime? @updatedAt @map("updated_at")
-  delivererId String?    @map("deliverer_id")
-  recipientId String?    @map("recipient_id")
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime?     @updatedAt @map("updated_at")
+  delivererId String?       @map("deliverer_id")
+  recipientId String?       @map("recipient_id")
 
-  deliverer User? @relation("Deliverer", fields: [delivererId], references: [id])
-  recipient User? @relation("Recipient", fields: [recipientId], references: [id], onDelete: SetNull)
+  deliverer User?   @relation("Deliverer", fields: [delivererId], references: [id])
+  recipient User?   @relation("Recipient", fields: [recipientId], references: [id], onDelete: SetNull)
+  Photo     Photo[]
 
   @@map("packages")
+}
+
+model Photo {
+  id        String  @id @default(uuid())
+  title     String
+  url       String
+  packageId String  @unique
+  package   Package @relation(fields: [packageId], references: [id])
+
+  @@map("photos")
 }

@@ -1,9 +1,10 @@
 import { Entity } from '@/core/entity'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 
-interface PackagePhotoProps {
+export interface PackagePhotoProps {
   title: string
   url: string
+  packageId: string | UniqueEntityID
 }
 
 export class PackagePhoto extends Entity<PackagePhotoProps> {
@@ -13,6 +14,10 @@ export class PackagePhoto extends Entity<PackagePhotoProps> {
 
   get url() {
     return this.props.url
+  }
+
+  get packageId() {
+    return this.props.packageId
   }
 
   static create(props: PackagePhotoProps, id?: UniqueEntityID) {

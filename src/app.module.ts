@@ -9,7 +9,7 @@ import { UserRepository } from './domain/package/application/repositories/user-r
 import { PrismaUserRepository } from './infra/database/repositories/prisma-user-repository'
 import { CreateAccountController } from './infra/controllers/create-account.controller'
 import { ConfigModule } from '@nestjs/config'
-import { envSchema } from './env'
+import { envSchema } from './infra/env/env'
 import { AuthModule } from './auth/auth.module'
 import { AuthenticateController } from './infra/controllers/authenticate-controller'
 import { DeliveredDriverController } from './infra/controllers/delete-delivered-driver-controller'
@@ -38,6 +38,10 @@ import { GetPackageByUserIdController } from './infra/controllers/get-packages-b
 import { GetPackagesByUserIdUseCase } from './domain/use-cases/get-packages-by-user-id'
 import { NotifyRecipientUseCase } from './domain/use-cases/notify-recipeint'
 import { UploadPackageImageController } from './infra/controllers/upload-package-image-controller'
+import { StorageModule } from './infra/storage/storage.module'
+import { UploadAndCreatePackagePhotoUseCase } from './domain/use-cases/upload-and-create-package-photo'
+import { PackagePhotoRepository } from './domain/package/application/repositories/package-photo-repository'
+import { PrismaPackagePhotoRepository } from './infra/database/repositories/prisma-package-photo-repository'
 
 @Module({
   imports: [
@@ -46,6 +50,7 @@ import { UploadPackageImageController } from './infra/controllers/upload-package
       isGlobal: true,
     }),
     AuthModule,
+    StorageModule,
   ],
   controllers: [
     DeliveredDriverController,
@@ -80,6 +85,7 @@ import { UploadPackageImageController } from './infra/controllers/upload-package
     UpdateUserPasswordUseCase,
     GetPackagesByUserIdUseCase,
     NotifyRecipientUseCase,
+    UploadAndCreatePackagePhotoUseCase,
     {
       provide: PackageRepository,
       useClass: PrismaPackageRepository,
@@ -91,6 +97,10 @@ import { UploadPackageImageController } from './infra/controllers/upload-package
     {
       provide: DeliveredDriverRepository,
       useClass: PrismaDeliveredDriverRepository,
+    },
+    {
+      provide: PackagePhotoRepository,
+      useClass: PrismaPackagePhotoRepository,
     },
   ],
 })
