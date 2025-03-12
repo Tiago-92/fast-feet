@@ -1,4 +1,4 @@
-import { Package } from '../../enterprise/entities/package';
+import { Package } from '../../enterprise/entities/package'
 import { User } from '../../enterprise/entities/user'
 
 export abstract class UserRepository {
