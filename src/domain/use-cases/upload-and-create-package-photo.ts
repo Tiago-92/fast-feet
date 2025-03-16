@@ -1,6 +1,6 @@
 import { Either, left, right } from '@/core/either'
 import { Injectable } from '@nestjs/common'
-import { InvalidAttachmentType } from './errors/invalid-image-type'
+import { InvalidAttachmentTypeError } from './errors/invalid-image-type'
 import { Uploader } from '../package/application/storage/uploader'
 import { PackagePhoto } from '../package/enterprise/entities/package-photo'
 import { PackagePhotoRepository } from '../package/application/repositories/package-photo-repository'
@@ -14,7 +14,7 @@ interface UploadAndCreatePackagePhotoUseCaseRequest {
 }
 
 type UploadAndCreatePackagePhotoUseCaseResponse = Either<
-  InvalidAttachmentType,
+  InvalidAttachmentTypeError,
   {
     packagePhoto: PackagePhoto
   }
@@ -34,7 +34,7 @@ export class UploadAndCreatePackagePhotoUseCase {
     body,
   }: UploadAndCreatePackagePhotoUseCaseRequest): Promise<UploadAndCreatePackagePhotoUseCaseResponse> {
     if (!/^(image\/(jpeg|jpg|png))$/.test(fileType)) {
-      return left(new InvalidAttachmentType(fileType))
+      return left(new InvalidAttachmentTypeError(fileType))
     }
 
     const { url } = await this.uploader.upload({

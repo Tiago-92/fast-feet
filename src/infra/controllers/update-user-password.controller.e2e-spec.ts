@@ -9,7 +9,6 @@ describe('Update User Password (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let userId: string
-  let jwt: JwtService
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({

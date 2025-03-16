@@ -1,7 +1,7 @@
 import { UploadAndCreatePackagePhotoUseCase } from './upload-and-create-package-photo'
 import { FakeUploader } from 'test/storage/faker-uploader'
 import { InMemoryPackagePhotoRepository } from 'test/repositories/in-memory-package-photo-repository'
-import { InvalidAttachmentType } from './errors/invalid-image-type'
+import { InvalidAttachmentTypeError } from './errors/invalid-image-type'
 
 let inMemoryPackagePhotoRepository: InMemoryPackagePhotoRepository
 let fakeUploader: FakeUploader
@@ -52,6 +52,6 @@ describe('Upload and create package image', () => {
 
     expect(result.isLeft()).toBe(true)
 
-    expect(result.value).toBeInstanceOf(InvalidAttachmentType)
+    expect(result.value).toBeInstanceOf(InvalidAttachmentTypeError)
   })
 })
