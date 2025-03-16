@@ -13,13 +13,13 @@ import {
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 
-@Controller('/package/image/:packageId')
+@Controller('/package/image')
 export class UploadPackageImageController {
   constructor(
     private uploadAndCreatePackagePhotoUseCase: UploadAndCreatePackagePhotoUseCase,
   ) {}
 
-  @Post()
+  @Post(':packageId')
   @UseInterceptors(FileInterceptor('file'))
   async handle(
     @Param('packageId') packageId: string,

@@ -15,4 +15,16 @@ export class PrismaPackagePhotoRepository implements PackagePhotoRepository {
       data,
     })
   }
+
+  async findByPackageId(packageId: string): Promise<PackagePhoto | null> {
+    const photo = await this.prisma.photo.findFirst({
+      where: { packageId },
+    })
+
+    if (!photo) {
+      return null
+    }
+
+    return PrismaPackagePhotoMapper.toDomain(photo)
+  }
 }
