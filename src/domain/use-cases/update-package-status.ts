@@ -12,7 +12,13 @@ export class UpdatePackageStatusUseCase {
     private packagePhotoRepository: PackagePhotoRepository,
   ) {}
 
-  async execute(id: string, status: PackageStatus) {
+  async execute(
+    id: string,
+    status: PackageStatus,
+    authenticatedDeliveryDriver: string,
+  ) {
+    const packageData = await this.packageRepository.findById(id)
+
     if (status === 'DELIVERED') {
       const hasPhoto = await this.packagePhotoRepository.findByPackageId(id)
 
@@ -21,6 +27,12 @@ export class UpdatePackageStatusUseCase {
           'É obrigatório enviar uma foto antes de marcar como entregue',
         )
       }
+    }
+
+    if (packageData?.delivererId !== authenticatedDeliveryDriver) {
+      throw new Error(
+        'Apenas o entregador responsável pode marcar como entregue',
+      )
     }
 
     const updateStatus = await this.packageRepository.updateStatus(id, status)

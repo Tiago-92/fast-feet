@@ -21,7 +21,10 @@ describe('Update Package Status', () => {
 
     await inMemoryPackageRepository.create(packageContent)
 
-    const updatedPackageStatus = await inMemoryPackageRepository.updateStatus(packageContent.id.toString(), 'PICKUP')
+    const updatedPackageStatus = await inMemoryPackageRepository.updateStatus(
+      packageContent.id.toString(),
+      'PICKUP',
+    )
 
     expect(inMemoryPackageRepository.items).toHaveLength(1)
     expect(updatedPackageStatus.getProps()).toEqual(

@@ -1,8 +1,8 @@
 import { InMemoryDeliveredDriverRepository } from 'test/repositories/in-memory-delivered-driver-repository'
 import { DeleteDeliveredDriverUseCase } from './delete-delivered-driver'
 import { User } from '../package/enterprise/entities/user'
-import { UserRoleEnum } from '../enums/user-role-enum'
 import { UniqueEntityID } from '@/core/unique-entity-id'
+import { UserRole } from '@prisma/client'
 
 let inMemoryDeliveredDriverRepository: InMemoryDeliveredDriverRepository
 let sut: DeleteDeliveredDriverUseCase
@@ -19,7 +19,10 @@ describe('Register User', () => {
         name: 'John Doe',
         email: 'johndoe@example.com',
         password: '123456',
-        role: UserRoleEnum.DELIVERED_DRIVER,
+        role: UserRole.DELIVERED_DRIVER,
+        latitude: '5545484212178',
+        longitude: '-884848484848',
+        phone: '819XXXX745',
       },
       new UniqueEntityID('1'),
     )

@@ -32,7 +32,7 @@ describe('Update Package Status (E2E)', () => {
   test('[PATCH] /status/update/:id', async () => {
     const hashedPassword = await hash('123545', 10)
 
-    await userFactory.makePrismaUser({
+    const deliveryDriver = await userFactory.makePrismaUser({
       email: 'jose@teste.com',
       password: hashedPassword,
     })
@@ -41,6 +41,7 @@ describe('Update Package Status (E2E)', () => {
       title: 'Pacote 02',
       content: 'Pacote 2',
       status: PackageStatus.AWAITING_PICKUP,
+      delivererId: deliveryDriver.id,
     })
     packageId = packageContent.id.toString()
 
@@ -65,6 +66,9 @@ describe('Update Package Status (E2E)', () => {
         status: 'RETURNED',
       },
     })
+
+    console.log(response.body)
+    console.log(response.statusCode)
 
     expect(response.statusCode).toBe(200)
     expect(statusUpdated).toBeTruthy()

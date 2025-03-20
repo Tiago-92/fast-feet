@@ -1,10 +1,16 @@
 import { User } from '@/domain/package/enterprise/entities/user'
 import { DeliveredDriverRepository } from '@/domain/package/application/repositories/delivered-driver-repository'
-import { UserRoleEnum } from '@/domain/enums/user-role-enum'
+import { UserRole } from '@prisma/client'
 
 export class InMemoryDeliveredDriverRepository
   implements DeliveredDriverRepository
 {
+  getDelivererLocation(
+    delivererId: string,
+  ): Promise<{ latitude: number; longitude: number } | null> {
+    throw new Error('Method not implemented.')
+  }
+
   public items: User[] = []
 
   async create(user: User): Promise<User> {
@@ -25,7 +31,7 @@ export class InMemoryDeliveredDriverRepository
 
   async update(
     id: string,
-    data: { name: string; email: string; password: string; role: UserRoleEnum },
+    data: { name: string; email: string; password: string; role: UserRole },
   ): Promise<User> {
     const index = this.items.findIndex((user) => user.id.toString() === id)
 

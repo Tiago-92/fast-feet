@@ -9,6 +9,7 @@ import {
   Param,
   Body,
   UseGuards,
+  Request,
 } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { PackageStatus } from '@prisma/client'
@@ -22,8 +23,18 @@ export class UpdatePackageStatusController {
   @Patch()
   @HttpCode(200)
   @Roles('DELIVERED_DRIVER')
-  async handle(@Param('id') id: string, @Body('status') status: PackageStatus) {
-    const result = await this.updatePackageStatusUseCase.execute(id, status)
+  async handle(
+    @Param('id') id: string,
+    @Body('status') status: PackageStatus,
+    @Request() req,
+  ) {
+    const authenticatedDeliveryDriver = req.user.id
+
+    const result = await this.updatePackageStatusUseCase.execute(
+      id,
+      status,
+      authenticatedDeliveryDriver,
+    )
 
     return result
   }
