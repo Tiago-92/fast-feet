@@ -41,7 +41,9 @@ export class InMemoryAccountRepository implements UserRepository {
     return updatedPackage
   }
 
-  getPackagesByUserId(recipientId: string): Promise<Package[]> {
-    return Promise.resolve(this.packages.filter((pkg) => pkg.recipientId.toString() === recipientId))
+  async getPackagesByDelivererId(deliveredId: string): Promise<Package[]> {
+    return Promise.resolve(
+      this.packages.filter((pkg) => pkg.delivererId.toString() === deliveredId),
+    )
   }
 }

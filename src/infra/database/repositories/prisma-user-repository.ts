@@ -41,10 +41,10 @@ export class PrismaUserRepository implements UserRepository {
     return PrismaUserMapper.toDomain(updatedPassword)
   }
 
-  async getPackagesByUserId(recipientId: string): Promise<Package[]> {
+  async getPackagesByDelivererId(delivererId: string): Promise<Package[]> {
     const packageContent = await this.prisma.package.findMany({
-      where: { recipientId },
-    }) 
+      where: { delivererId },
+    })
 
     return packageContent.map(PrismaPackageMapper.toDomain)
   }

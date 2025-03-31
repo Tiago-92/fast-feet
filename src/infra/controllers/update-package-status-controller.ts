@@ -28,7 +28,8 @@ export class UpdatePackageStatusController {
     @Body('status') status: PackageStatus,
     @Request() req,
   ) {
-    const authenticatedDeliveryDriver = req.user.id
+    const authenticatedDeliveryDriver = req.user
+    console.log('Usuário autenticado', authenticatedDeliveryDriver)
 
     const result = await this.updatePackageStatusUseCase.execute(
       id,

@@ -22,7 +22,7 @@ describe('Get Delivered Driver Use Case', () => {
         role: UserRole.DELIVERED_DRIVER,
         latitude: '751215668612',
         longitude: '-51515667781',
-        phone: '429XXXXXX51'
+        phone: '429XXXXXX51',
       },
       new UniqueEntityID('1'),
     )

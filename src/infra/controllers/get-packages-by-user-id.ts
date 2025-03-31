@@ -7,6 +7,7 @@ import {
   HttpCode,
   Injectable,
   Param,
+  Request,
   UseGuards,
 } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
@@ -20,8 +21,13 @@ export class GetPackageByUserIdController {
   @Get()
   @Roles('DELIVERED_DRIVER')
   @HttpCode(200)
-  async handle(@Param('id') recipientId: string) {
-    const packages = await this.getPackageUseCase.execute({ recipientId })
+  async handle(@Param('id') delivererId: string, @Request() req) {
+    const authenticatedDeliveryDriver = req.user.sub
+
+    const packages = await this.getPackageUseCase.execute({
+      delivererId,
+      authenticatedDeliveryDriver,
+    })
 
     return packages
   }

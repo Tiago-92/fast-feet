@@ -31,45 +31,6 @@ describe('Update Delivred Driver (E2E)', () => {
     await app.init()
 
     await prisma.package.deleteMany()
-
-    /* const deliverer = await prisma.user.create({
-      data: {
-        name: 'Entregador 1',
-        email: 'entregador@fast.com',
-        password: '123456',
-        role: 'DELIVERED_DRIVER',
-        latitude: '84d84de5d4e5d4e54dcec',
-        longitude: 'dedececcd44ccececascc',
-        phone: '429XXXXXX45',
-      },
-    })
-    delivererId = deliverer.id
-
-    const recipient = await prisma.user.create({
-      data: {
-        name: 'Destinatário 1',
-        email: 'destinatario@fast.com',
-        password: '123456',
-        role: 'RECIPIENT',
-        latitude: '84d84de5d4e5d4e54dcec',
-        longitude: 'dedececcd44ccececascc',
-        phone: '429XXXXXX45',
-      },
-    })
-    recipientId = recipient.id
-
-    const packageContent = await prisma.package.create({
-      data: {
-        title: 'Embalagem teste 1',
-        content: 'Embalagem teste 1',
-        status: PackageStatus.DELIVERED,
-        delivererId,
-        recipientId,
-        latitude: 'dsdasdsdasdx8dc',
-        longitude: 'defec518412scae7',
-      },
-    })
-    packageId = packageContent.id */
   })
 
   test('[PUT] /package/update/:id', async () => {

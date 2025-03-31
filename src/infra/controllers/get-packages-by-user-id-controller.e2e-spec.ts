@@ -10,7 +10,7 @@ import { UserFactory } from 'test/factories/user-factory'
 describe('Fetch all packages by User ID (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
-  let recipientId: string
+  let delivererId: string
   let userFactory: UserFactory
   let packageFactory: PackageFactory
 
@@ -32,27 +32,24 @@ describe('Fetch all packages by User ID (E2E)', () => {
 
   test('[GET] /packages/user/:id', async () => {
     const hashedPassword = await hash('123545', 10)
-    // delivered driver
-    await userFactory.makePrismaUser({
+
+    const deliveredDriver = await userFactory.makePrismaUser({
       email: 'jose@teste.com',
       password: hashedPassword,
     })
+    delivererId = deliveredDriver.id.toString()
 
-    const recipient = await userFactory.makePrismaUser({
-      role: 'RECIPIENT',
+    const packageContent = await packageFactory.makePrismaPackage({
+      title: 'Pacote 01',
+      content: 'Pacote 1',
+      status: 'AWAITING_PICKUP',
+      delivererId,
     })
-    recipientId = recipient.id.toString()
 
     await packageFactory.makePrismaPackage({
       title: 'Pacote 01',
       content: 'Pacote 1',
-      recipientId,
-    })
-
-    await packageFactory.makePrismaPackage({
-      title: 'Pacote 02',
-      content: 'Pacote 2',
-      recipientId,
+      status: 'AWAITING_PICKUP',
     })
 
     const authResponse = await request(app.getHttpServer())
@@ -65,32 +62,10 @@ describe('Fetch all packages by User ID (E2E)', () => {
     const accessToken = authResponse.body.access_token
 
     const response = await request(app.getHttpServer())
-      .get(`/packages/user/${recipientId}`)
+      .get(`/packages/user/${packageContent.delivererId.toString()}`)
       .set('Authorization', `Bearer ${accessToken}`)
 
     expect(response.status).toBe(200)
-    expect(response.body.value.packageContent).toHaveLength(2)
-    /* expect(response.body.value.packages).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          props: expect.objectContaining({
-            title: 'Embalagem Teste',
-            status: 'AWAITING_PICKUP',
-            recipientId: expect.objectContaining({
-              value: recipientId,
-            }),
-          }),
-        }),
-        expect.objectContaining({
-          props: expect.objectContaining({
-            title: 'Embalagem Teste 2',
-            status: 'AWAITING_PICKUP',
-            recipientId: expect.objectContaining({
-              value: recipientId,
-            }),
-          }),
-        }),
-      ]),
-    ) */
+    expect(response.body.value.packages).toHaveLength(2)
   })
 })

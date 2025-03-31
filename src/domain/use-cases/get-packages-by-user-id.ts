@@ -2,15 +2,17 @@ import { Either, right } from '@/core/either'
 import { Injectable } from '@nestjs/common'
 import { Package } from '../package/enterprise/entities/package'
 import { UserRepository } from '../package/application/repositories/user-repository'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 interface GetPackagesByUserIdUseCaseRequest {
-  recipientId: string
+  delivererId: string
+  authenticatedDeliveryDriver?: string
 }
 
 type GetPackagesByUserIdUseCaseResponse = Either<
   null,
   {
-    packageContent: Package[]
+    packages: Package[]
   }
 >
 
@@ -19,17 +21,32 @@ export class GetPackagesByUserIdUseCase {
   constructor(private userRepository: UserRepository) {}
 
   async execute({
-    recipientId,
+    delivererId,
+    authenticatedDeliveryDriver,
   }: GetPackagesByUserIdUseCaseRequest): Promise<GetPackagesByUserIdUseCaseResponse> {
-    const packageContent =
-      await this.userRepository.getPackagesByUserId(recipientId)
+    const packages =
+      await this.userRepository.getPackagesByDelivererId(delivererId)
 
-    if (!recipientId) {
-      throw new Error('Usuário não encontrado.')
+    const allMatch = packages.every((pkg) => {
+      const deliveredDriverValue =
+        pkg.delivererId instanceof UniqueEntityID
+          ? pkg.delivererId.toString()
+          : pkg.delivererId
+      console.log('ID do entregador do pacote', deliveredDriverValue)
+
+      return deliveredDriverValue === authenticatedDeliveryDriver
+    })
+
+    if (!allMatch) {
+      throw new Error('Não é possível listar as encomendas de outro entregador')
     }
 
+    /* if (!delivererId) {
+      throw new Error('Entregador não encontrado.')
+    } */
+
     return right({
-      packageContent,
+      packages,
     })
   }
 }
